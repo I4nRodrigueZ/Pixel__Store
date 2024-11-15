@@ -2,7 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from flask_migrate import Migrate
-from .Modelos.modelos import db  # Importa db desde modelos.py
+from .Modelos.modelos import db
 from .vistas import VistaUsuarios, VistaFacturas, VistaJuegos, VistaCarritos
 
 def create_app(config_name='default'):

@@ -1,4 +1,4 @@
-from Flaskr import create_app  # Flaskr es el nombre de tu paquete principal
+from Flaskr import create_app  
 
 # Crear la aplicación
 app = create_app()
