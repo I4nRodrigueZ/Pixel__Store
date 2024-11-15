@@ -1,7 +1,6 @@
 from flask import request
 from flask_restful import Resource
-from ..modelos import db, Usuario, Juego, Factura, Carrito, Notificacion, HistorialPrecio
-from ..schemas import UsuarioSchema, JuegoSchema, FacturaSchema, CarritoSchema, NotificacionSchema, HistorialPrecioSchema
+from ..Modelos import db, Usuario, Juego, Factura, Carrito, UsuarioSchema, JuegoSchema, FacturaSchema, CarritoSchema
 
 usuario_schema = UsuarioSchema()
 usuarios_schema = UsuarioSchema(many=True)
@@ -11,10 +10,7 @@ factura_schema = FacturaSchema()
 facturas_schema = FacturaSchema(many=True)
 carrito_schema = CarritoSchema()
 carritos_schema = CarritoSchema(many=True)
-notificacion_schema = NotificacionSchema()
-notificaciones_schema = NotificacionSchema(many=True)
-historial_schema = HistorialPrecioSchema()
-historiales_schema = HistorialPrecioSchema(many=True)
+
 
 # Vista para manejar todos los usuarios
 class VistaUsuarios(Resource):
@@ -147,33 +143,3 @@ class VistaCarrito(Resource):
         db.session.delete(carrito)
         db.session.commit()
         return '', 204
-
-# Vista para manejar las notificaciones
-class VistaNotificaciones(Resource):
-    def get(self):
-        return notificaciones_schema.dump(Notificacion.query.all())
-
-    def post(self):
-        nueva_notificacion = Notificacion(
-            id_usuario=request.json['id_usuario'],
-            mensaje=request.json['mensaje'],
-            fecha_envio=request.json['fecha_envio']
-        )
-        db.session.add(nueva_notificacion)
-        db.session.commit()
-        return notificacion_schema.dump(nueva_notificacion), 201
-
-# Vista para manejar el historial de precios
-class VistaHistorialPrecios(Resource):
-    def get(self):
-        return historiales_schema.dump(HistorialPrecio.query.all())
-
-    def post(self):
-        nuevo_historial = HistorialPrecio(
-            id_juego=request.json['id_juego'],
-            precio=request.json['precio'],
-            fecha_cambio=request.json['fecha_cambio']
-        )
-        db.session.add(nuevo_historial)
-        db.session.commit()
-        return historial_schema.dump(nuevo_historial), 201
