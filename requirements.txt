@@ -1,0 +1,45 @@
+click==8.1.3
+Flask==2.3.2
+Flask-SQLAlchemy==2.5.1
+greenlet==2.0.1
+itsdangerous==2.1.2
+Jinja2==3.1.2
+MarkupSafe==2.1.1
+SQLAlchemy==1.4.40
+Werkzeug==2.3.3
+Flask-Migrate==4.0.7
+Flask-MySQLdb==2.0.0
+marshmallow==3.23.0
+marshmallow-sqlalchemy==1.1.0
+mysql==0.0.3
+PyMySQL==1.1.1
+Flask-RESTful==0.3.10  # Añadido Flask-RESTful
+Flask-JWT-Extended==4.4.4  # Añadido Flask-JWT-Extended para manejar JWT
+Flask-Cors==4.0.0  # Añadido Flask-CORS para manejar CORS
+
+
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_restful import Api
+from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
+from flask_cors import CORS
+from .Modelos.modelos import db
+
+def create_app(config_name='default'):
+    app = Flask(__name__)
+    
+    # Configuración de la base de datos MySQL
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/quantumleap'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    # Inicialización de la base de datos y migración
+    db.init_app(app)
+    migrate = Migrate(app, db)  # Inicializa Flask-Migrate
+
+    # Configuración de JWT
+    app.config['JWT_SECRET_KEY'] = 'supersecretkey'  # Cambia esto por una clave más segura
+    jwt = JWTManager(app)  # Inicializa JWT para autenticar las peticiones
+
+    # Habilita CORS para permitir solicitudes de otros dominios
+    CORS(app)
