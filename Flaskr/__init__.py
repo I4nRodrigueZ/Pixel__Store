@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from flask_migrate import Migrate
+<<<<<<< HEAD
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from .Modelos import db  # Importa db desde el archivo Modelos
@@ -73,5 +74,28 @@ def create_app(config_name='default'):
     # Rutas para Logs
     api.add_resource(VistaLogs, '/logs')
     api.add_resource(VistaLog, '/log/<int:id_log>')
+=======
+from .Modelos.modelos import db
+from .vistas import VistaUsuarios, VistaFacturas, VistaJuegos, VistaCarritos
+
+def create_app(config_name='default'):
+    app = Flask(__name__)
+    
+    # Configuración de la base de datos MySQL
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/quantumleap'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    # Inicialización de la base de datos y migración
+    db.init_app(app)
+    migrate = Migrate(app, db)  # Esto inicializa Flask-Migrate correctamente
+
+    # Configuración de la API RESTful
+    api = Api(app)
+    api.add_resource(VistaUsuarios, '/usuarios')
+    api.add_resource(VistaFacturas, '/facturas')
+    api.add_resource(VistaJuegos, '/juegos')
+    api.add_resource(VistaCarritos, '/carritos')
+ 
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
 
     return app

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 click==8.1.3
 Flask==2.3.2
 Flask-SQLAlchemy==2.5.1
@@ -43,3 +44,20 @@ def create_app(config_name='default'):
 
     # Habilita CORS para permitir solicitudes de otros dominios
     CORS(app)
+=======
+click==8.0.1
+Flask==1.1.2
+Flask-SQLAlchemy==2.5.1
+greenlet==2.0.1
+itsdangerous==2.0.1
+Jinja2==3.0.1
+MarkupSafe==2.0.1
+SQLAlchemy==1.4.40  # Actualizado
+Werkzeug==2.0.1
+Flask-Migrate==4.0.7
+Flask-MySQLdb==2.0.0  # Podría presentar problemas en versiones recientes de Python, considera usar PyMySQL
+marshmallow==3.23.0
+marshmallow-sqlalchemy==1.1.0
+mysql==0.0.3  # Podrías considerar PyMySQL como alternativa
+PyMySQL==1.1.1
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283

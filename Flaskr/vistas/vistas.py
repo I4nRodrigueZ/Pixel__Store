@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from datetime import datetime
 from flask import request
 from flask_restful import Resource
@@ -6,17 +7,26 @@ from flask_jwt_extended import (
     jwt_required, create_access_token, get_jwt_identity
 )
 from ..Modelos import db,RolUsuario, Usuario, Juego, Factura, Carrito, Categoria, Divisa, Resena, Promocion, Log, UsuarioSchema, JuegoSchema, CategoriaSchema, FacturaSchema, CarritoSchema, DivisaSchema , ResenaSchema, PromocionSchema, LogSchema
+=======
+from flask import request
+from flask_restful import Resource
+from ..Modelos import db, Usuario, Juego, Factura, Carrito, UsuarioSchema, JuegoSchema, FacturaSchema, CarritoSchema
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
 
 usuario_schema = UsuarioSchema()
 usuarios_schema = UsuarioSchema(many=True)
 juego_schema = JuegoSchema()
 juegos_schema = JuegoSchema(many=True)
+<<<<<<< HEAD
 categoria_schema = CategoriaSchema()
 categorias_schema = CategoriaSchema(many=True)
+=======
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
 factura_schema = FacturaSchema()
 facturas_schema = FacturaSchema(many=True)
 carrito_schema = CarritoSchema()
 carritos_schema = CarritoSchema(many=True)
+<<<<<<< HEAD
 divisa_schema = DivisaSchema()
 divisas_schema = DivisaSchema(many=True)
 resena_schema = ResenaSchema()
@@ -162,11 +172,54 @@ class VistaUsuario(Resource):
     @jwt_required()
     def delete(self, id_usuario):
         # Eliminar un usuario por su id
+=======
+
+
+# Vista para manejar todos los usuarios
+class VistaUsuarios(Resource):
+    def get(self):
+        return usuarios_schema.dump(Usuario.query.all())
+
+    def post(self):
+        nuevo_usuario = Usuario(
+            nombre=request.json['nombre'],
+            apellido=request.json['apellido'],
+            email=request.json['email'],
+            contraseña=request.json['contraseña'],
+            fecha_registro=request.json['fecha_registro'],
+            direccion=request.json.get('direccion'),
+            telefono=request.json.get('telefono'),
+            nombre_rol=request.json['nombre_rol']
+        )
+        db.session.add(nuevo_usuario)
+        db.session.commit()
+        return usuario_schema.dump(nuevo_usuario), 201
+
+class VistaUsuario(Resource):
+    def get(self, id_usuario):
+        usuario = Usuario.query.get_or_404(id_usuario)
+        return usuario_schema.dump(usuario)
+
+    def put(self, id_usuario):
+        usuario = Usuario.query.get_or_404(id_usuario)
+        usuario.nombre = request.json.get('nombre', usuario.nombre)
+        usuario.apellido = request.json.get('apellido', usuario.apellido)
+        usuario.email = request.json.get('email', usuario.email)
+        usuario.contraseña = request.json.get('contraseña', usuario.contraseña)
+        usuario.direccion = request.json.get('direccion', usuario.direccion)
+        usuario.telefono = request.json.get('telefono', usuario.telefono)
+        usuario.nombre_rol = request.json.get('nombre_rol', usuario.nombre_rol)
+        db.session.commit()
+        return usuario_schema.dump(usuario)
+
+    def delete(self, id_usuario):
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
         usuario = Usuario.query.get_or_404(id_usuario)
         db.session.delete(usuario)
         db.session.commit()
         return '', 204
 
+<<<<<<< HEAD
 
 
 class VistaJuegos(Resource):
@@ -175,6 +228,13 @@ class VistaJuegos(Resource):
         return juegos_schema.dump(Juego.query.all()), 200
 
     @jwt_required()
+=======
+# Vista para manejar todos los juegos
+class VistaJuegos(Resource):
+    def get(self):
+        return juegos_schema.dump(Juego.query.all())
+
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
     def post(self):
         nuevo_juego = Juego(
             nombre_juego=request.json['nombre_juego'],
@@ -188,6 +248,7 @@ class VistaJuegos(Resource):
         db.session.commit()
         return juego_schema.dump(nuevo_juego), 201
 
+<<<<<<< HEAD
 
 class VistaJuego(Resource):
     @jwt_required()
@@ -196,6 +257,13 @@ class VistaJuego(Resource):
         return juego_schema.dump(juego), 200
 
     @jwt_required()
+=======
+class VistaJuego(Resource):
+    def get(self, id_juego):
+        juego = Juego.query.get_or_404(id_juego)
+        return juego_schema.dump(juego)
+
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
     def put(self, id_juego):
         juego = Juego.query.get_or_404(id_juego)
         juego.nombre_juego = request.json.get('nombre_juego', juego.nombre_juego)
@@ -205,15 +273,21 @@ class VistaJuego(Resource):
         juego.condicion = request.json.get('condicion', juego.condicion)
         juego.id_categoria = request.json.get('id_categoria', juego.id_categoria)
         db.session.commit()
+<<<<<<< HEAD
         return juego_schema.dump(juego), 200
 
     @jwt_required()
+=======
+        return juego_schema.dump(juego)
+
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
     def delete(self, id_juego):
         juego = Juego.query.get_or_404(id_juego)
         db.session.delete(juego)
         db.session.commit()
         return '', 204
 
+<<<<<<< HEAD
 
 class VistaCategoria(Resource):
     def get(self, id_categoria):
@@ -352,6 +426,37 @@ class VistaCarritos(Resource):
         return carritos_schema.dump(Carrito.query.all()), 200
 
     @jwt_required()
+=======
+# Vista para manejar todas las facturas
+class VistaFacturas(Resource):
+    def get(self):
+        return facturas_schema.dump(Factura.query.all())
+
+    def post(self):
+        nueva_factura = Factura(
+            id_usuario=request.json['id_usuario'],
+            fecha_factura=request.json['fecha_factura'],
+            monto_total=request.json['monto_total'],
+            impuestos=request.json.get('impuestos', 0),
+            total_factura=request.json['total_factura'],
+            metodo_pago=request.json['metodo_pago'],
+            id_divisa=request.json['id_divisa']
+        )
+        db.session.add(nueva_factura)
+        db.session.commit()
+        return factura_schema.dump(nueva_factura), 201
+
+class VistaFactura(Resource):
+    def get(self, id_factura):
+        factura = Factura.query.get_or_404(id_factura)
+        return factura_schema.dump(factura)
+
+# Vista para manejar los carritos
+class VistaCarritos(Resource):
+    def get(self):
+        return carritos_schema.dump(Carrito.query.all())
+
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
     def post(self):
         nuevo_carrito = Carrito(
             id_usuario=request.json['id_usuario'],
@@ -361,6 +466,7 @@ class VistaCarritos(Resource):
         db.session.commit()
         return carrito_schema.dump(nuevo_carrito), 201
 
+<<<<<<< HEAD
 
 class VistaCarrito(Resource):
     @jwt_required()
@@ -369,10 +475,18 @@ class VistaCarrito(Resource):
         return carrito_schema.dump(carrito), 200
 
     @jwt_required()
+=======
+class VistaCarrito(Resource):
+    def get(self, id_carrito):
+        carrito = Carrito.query.get_or_404(id_carrito)
+        return carrito_schema.dump(carrito)
+
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
     def delete(self, id_carrito):
         carrito = Carrito.query.get_or_404(id_carrito)
         db.session.delete(carrito)
         db.session.commit()
+<<<<<<< HEAD
         return '', 204
 
 class VistaDivisas(Resource):
@@ -620,3 +734,6 @@ class VistaLog(Resource):
         return {"mensaje": "Log eliminado exitosamente"}, 200
 
 
+=======
+        return '', 204
+>>>>>>> 8e54b907b59f43e6b1d54a92cfc4672d687cb283
