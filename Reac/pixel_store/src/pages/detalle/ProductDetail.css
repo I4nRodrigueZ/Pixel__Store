@@ -1,0 +1,748 @@
+@import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700&family=Press+Start+2P&display=swap');
+
+:root {
+    --primary-color: #ffd54f;
+    --secondary-color: #00e676;
+    --accent-color: #ff4081;
+    --dark-bg: #121212;
+    --darker-bg: #0a0a0a;
+    --card-bg: #1e1e1e;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --error-color: #ff4444;
+    --success-color: #00c853;
+    --resena-bg: #252525;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    font-family: 'Oxanium', cursive;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+.product-detail {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--darker-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 213, 79, 0.1);
+    position: relative;
+}
+
+.product-detail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+}
+
+.game-header {
+    padding: 20px 30px;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(10, 10, 10, 0.95));
+    border-bottom: 1px solid rgba(255, 213, 79, 0.1);
+}
+
+.game-title {
+    font-family: 'Press Start 2P', cursive;
+    color: var(--primary-color);
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px rgba(255, 213, 79, 0.5);
+    letter-spacing: 1px;
+}
+
+.game-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rating-stars {
+    color: var(--primary-color);
+    letter-spacing: 2px;
+    font-size: 18px;
+}
+
+.rating-value {
+    background: rgba(255, 213, 79, 0.2);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.product-content {
+    display: flex;
+    padding: 30px;
+    gap: 40px;
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-image-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 213, 79, 0.2);
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s;
+}
+
+.product-image:hover {
+    transform: scale(1.02);
+}
+
+.image-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--accent-color);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.thumbnail-gallery {
+    display: flex;
+    gap: 10px;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 60px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    object-fit: cover;
+}
+
+.thumbnail:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.thumbnail.active {
+    border-color: var(--accent-color);
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 64, 129, 0.5);
+}
+
+.product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.game-meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    background: rgba(30, 30, 30, 0.7);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 213, 79, 0.1);
+}
+
+.meta-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.meta-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.meta-value {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.price-section {
+    background: rgba(30, 30, 30, 0.7);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 213, 79, 0.1);
+}
+
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+.current-price {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.discount-badge {
+    background: var(--accent-color);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.stock-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.stock-indicator {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.stock-indicator.in-stock {
+    color: var(--success-color);
+}
+
+.stock-indicator.out-of-stock {
+    color: var(--error-color);
+}
+
+.stock-quantity {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.game-description {
+    background: rgba(30, 30, 30, 0.7);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 213, 79, 0.1);
+}
+
+.section-title {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.game-features {
+    margin-top: 15px;
+}
+
+.game-features ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+.game-features li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 8px;
+}
+
+.game-features li::before {
+    content: '▹';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+}
+
+.product-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.buy-button, .cart-button, .wishlist-button {
+    flex: 1;
+    min-width: 200px;
+    padding: 15px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.buy-button {
+    background: linear-gradient(135deg, var(--primary-color), #ffb300);
+    color: #222;
+}
+
+.buy-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(255, 213, 79, 0.4);
+}
+
+.buy-button:active {
+    transform: translateY(0);
+}
+
+.cart-button {
+    background: rgba(30, 30, 30, 0.8);
+    color: var(--text-primary);
+    border: 1px solid var(--primary-color);
+}
+
+.cart-button:hover {
+    background: rgba(255, 213, 79, 0.1);
+    transform: translateY(-3px);
+}
+
+.wishlist-button {
+    background: rgba(30, 30, 30, 0.8);
+    color: var(--text-primary);
+    border: 1px solid var(--accent-color);
+}
+
+.wishlist-button:hover {
+    background: rgba(255, 64, 129, 0.1);
+    transform: translateY(-3px);
+}
+
+.button-extra {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 10px;
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: normal;
+}
+
+.game-specs {
+    background: rgba(30, 30, 30, 0.7);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 213, 79, 0.1);
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.spec-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.spec-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.spec-value {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Sección de Reseñas */
+.resenas-section {
+    margin: 0 30px 30px;
+    padding: 25px;
+    background: var(--resena-bg);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 213, 79, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.resenas-section .section-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.add-resena-button {
+    background: linear-gradient(135deg, var(--primary-color), #ffb300);
+    color: #222;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-family: 'Oxanium', sans-serif;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-resena-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 213, 79, 0.4);
+}
+
+.resena-form {
+    background: rgba(10, 10, 10, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 213, 79, 0.2);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.form-group select, 
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    background: rgba(30, 30, 30, 0.8);
+    border: 1px solid rgba(255, 213, 79, 0.3);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: 'Oxanium', sans-serif;
+    transition: all 0.3s;
+}
+
+.form-group select:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(255, 64, 129, 0.2);
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.submit-resena-button {
+    background: linear-gradient(135deg, var(--accent-color), #f50057);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+    font-family: 'Oxanium', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.submit-resena-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 64, 129, 0.4);
+}
+
+.resenas-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.resena-card {
+    background: rgba(30, 30, 30, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 3px solid var(--primary-color);
+    transition: all 0.3s;
+}
+
+.resena-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.resena-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.resena-user {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+.resena-rating {
+    color: var(--primary-color);
+    font-size: 16px;
+    letter-spacing: 2px;
+}
+
+.resena-date {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.resena-comment {
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.no-resenas {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-secondary);
+    font-style: italic;
+    background: rgba(30, 30, 30, 0.5);
+    border-radius: 8px;
+}
+
+/* Alertas Modales */
+.alert-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+.alert-content {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    border-top: 4px solid var(--accent-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.alert-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--secondary-color));
+}
+
+.alert-content h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.alert-content p {
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.alert-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.alert-login-button {
+    background: linear-gradient(135deg, var(--primary-color), #ffb300);
+    color: #222;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.alert-login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 213, 79, 0.4);
+}
+
+.alert-close-button {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border: 1px solid var(--text-secondary);
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.alert-close-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.alert-close-button.with-login {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--accent-color);
+}
+
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: var(--dark-bg);
+}
+
+.loading-animation {
+    text-align: center;
+}
+
+.pixel-loader {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 20px;
+    background: var(--primary-color);
+    position: relative;
+    animation: pixelLoad 1.5s infinite ease-in-out;
+}
+
+@keyframes pixelLoad {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        box-shadow: 0 0 0 var(--primary-color);
+    }
+    50% {
+        transform: scale(1.2) rotate(180deg);
+        box-shadow: 0 0 20px var(--primary-color);
+    }
+}
+
+.error-message {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: var(--error-color);
+    background: var(--card-bg);
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 50px auto;
+    border-left: 4px solid var(--error-color);
+}
+
+/* Efectos especiales */
+.product-detail::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 30%, rgba(255, 213, 79, 0.03) 0%, transparent 50%);
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .product-content {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+    }
+    
+    .game-title {
+        font-size: 20px;
+    }
+    
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-actions button {
+        min-width: 100%;
+    }
+
+    .resenas-section {
+        margin: 0 15px 20px;
+        padding: 15px;
+    }
+
+    .alert-buttons {
+        flex-direction: column;
+    }
+
+    .alert-login-button, 
+    .alert-close-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-header {
+        padding: 15px;
+    }
+
+    .game-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .thumbnail-gallery {
+        justify-content: center;
+    }
+
+    .resena-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

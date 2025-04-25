@@ -1,0 +1,135 @@
+/* 🎮 Estilo general del catálogo */
+.catalogo-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+  text-align: center;
+  background: radial-gradient(circle, #0c0c0c, #1a1a1a); /* Fondo gamer */
+  color: #fff;
+}
+
+/* 🎮 Lista de juegos */
+.juegos-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* 🕹️ Diseño de las tarjetas */
+.juego-card {
+  background: linear-gradient(145deg, #222, #111);
+  border-radius: 15px;
+  box-shadow: 0px 5px 15px rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  border: 2px solid transparent;
+}
+
+/* 🎭 Efecto 3D al pasar el mouse */
+.juego-card:hover {
+  box-shadow: 0px 8px 20px rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
+  border-color: #ae8957; /* Resaltar bordes */
+}
+
+/* 🎮 Imagen del juego */
+.juego-imagen {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* 🎯 Efecto en la imagen */
+.juego-card:hover .juego-imagen {
+  transform: scale(1.1) rotate(2deg);
+}
+
+/* 🏷️ Títulos y textos */
+.juego-card h2 {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.juego-card:hover h2 {
+  color: #ffcc00;
+}
+
+.juego-card p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #bbb;
+  line-height: 1.5;
+}
+
+/* 💰 Precio y stock */
+.juego-card .juego-precio {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #e74c3c;
+  margin: 10px 0;
+}
+
+.juego-card .juego-stock {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #27ae60;
+}
+
+/* 🎮 Botón de compra */
+.boton-comprar {
+  display: inline-block;
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background: #ae8957;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  margin-top: auto;
+  text-transform: uppercase;
+  box-shadow: 0px 5px 15px rgba(255, 204, 0, 0.3);
+}
+
+/* ⚡ Efecto en botón */
+.boton-comprar:hover {
+  background: #ffcc00;
+  color: #0c0c0c;
+  transform: scale(1.1);
+  box-shadow: 0px 5px 20px rgba(255, 204, 0, 0.5);
+}
+
+/* 📱 Responsividad */
+@media screen and (max-width: 768px) {
+  .catalogo-container {
+      padding: 10px;
+  }
+
+  .juego-imagen {
+      max-width: 180px;
+      height: 180px;
+  }
+
+  .juego-card h2 {
+      font-size: 1.2rem;
+  }
+
+  .boton-comprar {
+      font-size: 0.9rem;
+  }
+}

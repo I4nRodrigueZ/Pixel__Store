@@ -1,0 +1,88 @@
+.categoria-slider {
+    margin: 40px auto;
+    max-width: 1200px;
+  }
+  
+  .categoria-titulo {
+    font-size: 2rem;
+    color: #00ffc3;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  
+  .slider-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+  }
+  
+  .slider-horizontal {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 25px 0;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+  }
+  .slider-horizontal::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .slider-btn {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+    transition: transform 0.2s ease;
+  }
+  .slider-btn:hover {
+    transform: scale(1.2);
+  }
+  .slider-btn.left {
+    margin-right: 6px;
+  }
+  .slider-btn.right {
+    margin-left: 6px;
+  }
+  
+  .juego-card-slider {
+    min-width: 200px;
+    max-width: 200px;
+    flex: 0 0 auto;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: 0 0 10px #00ffc355;
+  }
+  .juego-card-slider:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00ffc3aa;
+  }
+  
+  .juego-img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+  
+  .info-container {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .juego-titulo {
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .juego-precio {
+    color: #00ffc3;
+    font-size: 0.9rem;
+  }
+  

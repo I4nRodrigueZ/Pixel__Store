@@ -1,0 +1,197 @@
+/* DetalleFactura.css - Estilo Gamer Tenebroso Elegante */
+
+/* Contenedor principal con temática gamer oscura */
+.detalle-factura-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 1px solid #3d2e0f;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de borde dorado */
+.detalle-factura-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #d4af37, #f1e5ac, #d4af37);
+    box-shadow: 0 0 10px #d4af37;
+}
+
+/* Efecto de circuito en los bordes */
+.detalle-factura-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, 
+        transparent, 
+        transparent 10px, 
+        #d4af37 10px, 
+        #d4af37 20px);
+}
+
+/* Títulos con estilo gamer */
+.detalle-factura-container h1 {
+    color: #f1e5ac;
+    text-shadow: 0 0 8px #d4af37, 0 0 15px #8b6914;
+    font-family: 'Orbitron', 'Arial', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #3d2e0f;
+    position: relative;
+}
+
+.detalle-factura-container h1::after {
+    content: '⚡';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.6;
+}
+
+.detalle-factura-container h2 {
+    color: #d4af37;
+    font-family: 'Orbitron', 'Arial', sans-serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin: 1.5rem 0 1rem;
+    border-bottom: 1px dashed #3d2e0f;
+    padding-bottom: 0.5rem;
+}
+
+/* Texto general */
+.detalle-factura-container p, 
+.detalle-factura-container span {
+    color: #c9b79c;
+    font-family: 'Rajdhani', 'Arial', sans-serif;
+    font-weight: 500;
+}
+
+.detalle-factura-container strong {
+    color: #d4af37;
+}
+
+/* Items de la factura - estilo gamer */
+.detalle-factura-container .factura-item {
+    background: rgba(30, 25, 15, 0.5);
+    border-left: 3px solid #d4af37;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.detalle-factura-container .factura-item:hover {
+    background: rgba(40, 35, 25, 0.7);
+    transform: translateX(5px);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.1);
+}
+
+.detalle-factura-container .factura-item::before {
+    content: '►';
+    position: absolute;
+    left: -15px;
+    color: #d4af37;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.detalle-factura-container .factura-item:hover::before {
+    left: -10px;
+    opacity: 1;
+}
+
+/* Icono de juego */
+.detalle-factura-container .factura-item .text-2xl {
+    color: #d4af37;
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.5);
+}
+
+/* Sección de totales */
+.detalle-factura-container .mt-6 {
+    background: rgba(20, 15, 5, 0.3);
+    padding: 1rem;
+    border-top: 1px solid #3d2e0f;
+    border-bottom: 1px solid #3d2e0f;
+    margin-top: 2rem;
+}
+
+.detalle-factura-container .text-blue-600 {
+    color: #f1e5ac !important;
+    font-size: 1.2rem;
+}
+
+/* Botón de volver - estilo gamer */
+.detalle-factura-container .volver-btn {
+    background: linear-gradient(145deg, #3a2c0f, #1a1407);
+    border: 1px solid #d4af37;
+    color: #f1e5ac;
+    padding: 0.8rem 2rem;
+    font-family: 'Orbitron', 'Arial', sans-serif;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.detalle-factura-container .volver-btn:hover {
+    background: linear-gradient(145deg, #4a3c1f, #2a2417);
+    letter-spacing: 2px;
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.detalle-factura-container .volver-btn::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(212, 175, 55, 0) 45%,
+        rgba(212, 175, 55, 0.1) 50%,
+        rgba(212, 175, 55, 0) 55%
+    );
+    transform: rotate(30deg);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        transform: rotate(30deg) translate(-30%, -30%);
+    }
+    100% {
+        transform: rotate(30deg) translate(30%, 30%);
+    }
+}
+
+/* Efecto de grid digital en el fondo */
+.detalle-factura-container {
+    background-image: 
+        linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}

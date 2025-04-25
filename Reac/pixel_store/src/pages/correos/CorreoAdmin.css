@@ -1,0 +1,127 @@
+.correo-admin-container {
+    max-width: 700px;
+    margin: 80px auto;
+    padding: 40px;
+    background: linear-gradient(145deg, #0c0c0c, #1f1f1f);
+    color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 0 25px #ae8957bb;
+    font-family: 'Segoe UI', sans-serif;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #ae895720;
+  }
+  
+  .correo-admin-container:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 30px #ae8957dd;
+  }
+  
+  .correo-admin-container h2 {
+    margin-bottom: 30px;
+    color: #ae8957;
+    text-align: center;
+    font-size: 2rem;
+    text-shadow: 0 0 8px #ae895799;
+    letter-spacing: 1px;
+  }
+  
+  /* Modo de envío selector */
+  .modo-envio-selector {
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  
+  .modo-envio-selector select {
+    padding: 10px 16px;
+    background-color: #262626;
+    color: white;
+    border: 1px solid #ae8957;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .modo-envio-selector select:focus {
+    outline: none;
+    border-color: #fff;
+    box-shadow: 0 0 8px #ae8957cc;
+  }
+  
+  /* Inputs y textarea */
+  .correo-form input,
+  .correo-form textarea {
+    width: 100%;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    border: 1px solid #333;
+    border-radius: 14px;
+    background-color: #202020;
+    color: #fff;
+    font-size: 17px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .correo-form input:focus,
+  .correo-form textarea:focus {
+    outline: none;
+    border-color: #ae8957;
+    box-shadow: 0 0 10px #ae895788;
+  }
+  
+  /* Botón de enviar */
+  .correo-form button {
+    background: linear-gradient(135deg, #ae8957, #c8a065);
+    color: #fff;
+    border: none;
+    padding: 16px 24px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    font-size: 17px;
+    width: 100%;
+    font-weight: bold;
+    letter-spacing: 0.6px;
+    box-shadow: 0 0 12px #ae895740;
+  }
+  
+  .correo-form button:hover {
+    background: linear-gradient(135deg, #cba76a, #ae8957);
+    transform: scale(1.02);
+    box-shadow: 0 0 15px #ae895799;
+  }
+  
+  .correo-form button:disabled {
+    background-color: #8a6c48;
+    cursor: not-allowed;
+  }
+  
+  /* Mensaje de estado */
+  .estado-envio {
+    margin-top: 25px;
+    text-align: center;
+    font-weight: bold;
+    color: #ae8957;
+    background-color: #1a1a1a;
+    border: 1px solid #ae895766;
+    padding: 14px;
+    border-radius: 12px;
+    animation: fadeIn 0.4s ease-in-out;
+    font-size: 16px;
+  }
+  
+  /* Animación para el estado */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

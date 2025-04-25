@@ -1,0 +1,133 @@
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: #0c0c0c;
+  }
+  
+  /* Contenedor del menú */
+  .profile-menu {
+    position: relative;
+    display: inline-block;
+    z-index: 999;
+    font-family: 'Orbitron', sans-serif;
+  }
+  
+  /* Botón de perfil */
+  .profile-button {
+    background: linear-gradient(135deg, #ae8957, #ffcc70);
+    border: 2px solid #ffcc70;
+    box-shadow:
+      0 0 6px rgba(255, 204, 112, 0.3),
+      inset 0 0 4px rgba(174, 137, 87, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    transition: all 0.25s ease;
+    animation: softPulse 3s infinite alternate;
+  }
+  
+  .profile-button:hover {
+    transform: scale(1.06);
+    box-shadow:
+      0 0 10px rgba(255, 204, 112, 0.4),
+      0 0 20px rgba(174, 137, 87, 0.2);
+  }
+  
+  .profile-icon {
+    color: #ffffff;
+    font-size: 20px;
+    text-shadow: 0 0 3px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Menú desplegable */
+  .profile-dropdown {
+    position: absolute;
+    top: 58px;
+    right: 0;
+    width: 230px;
+    background: linear-gradient(135deg, #141414, #0c0c0c);
+    border: 2px solid #ae8957;
+    border-radius: 14px;
+    box-shadow:
+      0 0 15px rgba(174, 137, 87, 0.2),
+      0 0 6px rgba(255, 204, 112, 0.1);
+    opacity: 0;
+    transform: translateY(-12px) scale(0.95);
+    transition: all 0.3s ease;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  
+  /* Mostrar menú */
+  .profile-menu.active .profile-dropdown {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  
+  /* Línea decorativa superior */
+  .profile-dropdown::before {
+    content: "";
+    display: block;
+    height: 4px;
+    background: linear-gradient(90deg, #ffcc70, #ae8957, #ffcc70);
+    border-bottom: 1px solid #ae8957;
+  }
+  
+  /* Ítems del menú */
+  .profile-dropdown a,
+  .profile-dropdown button {
+    display: block;
+    padding: 14px 20px;
+    color: #f5f5f5;
+    text-decoration: none;
+    font-size: 14px;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 0.5px;
+    position: relative;
+  }
+  
+  .profile-dropdown a::before,
+  .profile-dropdown button::before {
+    content: "➤";
+    position: absolute;
+    left: 12px;
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.2s ease;
+    color: #ffcc70;
+  }
+  
+  .profile-dropdown a:hover::before,
+  .profile-dropdown button:hover::before {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
+  .profile-dropdown a:hover,
+  .profile-dropdown button:hover {
+    background: rgba(255, 204, 112, 0.08);
+    color: #ffcc70;
+    padding-left: 28px;
+    font-weight: bold;
+    box-shadow: inset 0 0 8px rgba(255, 204, 112, 0.1);
+  }
+  
+  /* Animación suavizada */
+  @keyframes softPulse {
+    0% {
+      box-shadow: 0 0 4px rgba(255, 204, 112, 0.2);
+    }
+    100% {
+      box-shadow: 0 0 8px rgba(255, 204, 112, 0.3);
+    }
+  }
+  
