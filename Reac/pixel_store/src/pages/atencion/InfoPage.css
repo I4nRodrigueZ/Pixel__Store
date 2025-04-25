@@ -1,0 +1,97 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #0c0c0c;
+    color: #fff;
+  }
+  
+  /* Contenedor principal */
+  .info-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 40px 20px;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  /* Secciones */
+  .section {
+    background-color: #1a1a1a;
+    border: 2px solid #ae8957;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 20px rgba(174, 137, 87, 0.2);
+    transition: transform 0.3s ease;
+  }
+  
+  .section:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Títulos */
+  h1 {
+    color: #ae8957;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 0 10px #ae8957;
+  }
+  
+  h2 {
+    color: #ae8957;
+    font-size: 2rem;
+    margin-bottom: 15px;
+  }
+  
+  /* Texto general */
+  p, li {
+    font-size: 1.1rem;
+    line-height: 1.8;
+  }
+  
+  /* Listas ordenadas */
+  ol {
+    padding-left: 20px;
+  }
+  
+  /* Texto especial */
+  strong {
+    color: #ae8957;
+  }
+  
+  strong.red {
+    color: #ff4d4d;
+    font-weight: bold;
+  }
+  
+  /* Animación suave de entrada */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .return-button {
+    background-color: #ae8957;
+    color: #0c0c0c;
+    padding: 12px 24px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(174, 137, 87, 0.6);
+    transition: all 0.3s ease;
+    font-weight: bold;
+  }
+  
+  .return-button:hover {
+    background-color: #fff;
+    color: #0c0c0c;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #ae8957;
+  }
+    

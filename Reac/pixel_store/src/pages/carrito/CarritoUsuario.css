@@ -1,0 +1,200 @@
+.carrito-container {
+  background-color: #0c0c0c;
+  min-height: 100vh;
+  padding: 6rem 2rem 3rem 2rem; /* Espacio arriba para que no choque con el header */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(30px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+.carrito-titulo {
+  text-align: center;
+  color: #ae8957;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px #ae8957aa;
+  animation: glowIn 1s ease-out;
+}
+
+@keyframes glowIn {
+  0% {
+      opacity: 0;
+      text-shadow: none;
+  }
+  100% {
+      opacity: 1;
+      text-shadow: 0 0 10px #ae8957aa;
+  }
+}
+
+.carrito-lista {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+}
+
+.carrito-item {
+  display: flex;
+  background-color: #1a1a1a;
+  border: 1px solid #ae8957;
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 0 10px #ae895733;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInUp 0.6s ease-out both;
+}
+
+.carrito-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 15px #ae8957aa;
+}
+
+.carrito-imagen {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-right: 1px solid #ae895733;
+}
+
+.carrito-info {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeInUp 0.7s ease-out both;
+}
+
+.carrito-titulo-juego {
+  color: #f4e8d0;
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.carrito-precio,
+.carrito-subtotal {
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 0.3rem;
+}
+
+.carrito-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.carrito-cantidad button {
+  background-color: #ae8957;
+  border: none;
+  color: #0c0c0c;
+  font-weight: bold;
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.carrito-cantidad button:hover {
+  background-color: #d4b086;
+  transform: scale(1.1);
+}
+
+.carrito-eliminar {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: #ff4c4c;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+}
+
+.carrito-eliminar:hover {
+  color: #ff7f7f;
+  text-decoration: underline;
+}
+
+.carrito-total {
+  background-color: #1a1a1a;
+  border: 1px solid #ae8957;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  text-align: right;
+  box-shadow: 0 0 10px #ae895722;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.carrito-total h3 {
+  font-size: 2rem;
+  color: #f4e8d0;
+  margin-bottom: 1rem;
+}
+
+.carrito-pago {
+  background-color: #ae8957;
+  border: none;
+  color: #0c0c0c;
+  padding: 0.8rem 2rem;
+  border-radius: 999px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px #ae8957aa;
+}
+
+.carrito-pago:hover {
+  background-color: #d4b086;
+  box-shadow: 0 0 20px #ae8957dd;
+  transform: translateY(-3px);
+}
+
+.carrito-loading,
+.carrito-error,
+.carrito-vacio {
+  text-align: center;
+  color: #ae8957;
+  font-size: 1.2rem;
+  margin-top: 5rem;
+  animation: fadeInUp 1s ease-out both;
+}
+.carrito-precio-original {
+    color: #999;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.tachado {
+    text-decoration: line-through;
+    color: #c0392b;
+}
+
+.carrito-precio-descuento {
+    font-weight: bold;
+    font-size: 1rem;
+    margin: 0;
+    color: #27ae60;
+}
+
+.precio-final {
+    font-size: 1.2rem;
+    color: #2ecc71;
+}
+
+.carrito-precio-contenedor {
+    margin-bottom: 0.5rem;
+}

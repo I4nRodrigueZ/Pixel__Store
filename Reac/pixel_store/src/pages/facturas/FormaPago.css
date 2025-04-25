@@ -1,0 +1,478 @@
+/* Variables de color basadas en #ae8957 (dorado café) */
+:root {
+    --main-color: #ae8957;      /* Dorado café principal */
+    --main-dark: #8a6d3b;       /* Versión más oscura */
+    --main-light: #c8a87a;      /* Versión más clara */
+    --main-extra-light: #e6d5b8; /* Muy claro para fondos */
+    --contrast-dark: #3e2723;    /* Café oscuro para contraste */
+    --text-color: #ffffff;          /* Color de texto principal */
+    --text-light: #ffffff;          /* Texto secundario */
+    --error-color: #ffffff;      /* Rojo para errores */
+}
+
+/* Loader personalizado */
+.loader {
+    --path: var(--main-dark);
+    --dot: var(--main-color);
+    --duration: 1.5s;
+    width: 44px;
+    height: 44px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.loader.small {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+.loader:before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    display: block;
+    background: var(--dot);
+    top: 37px;
+    left: 19px;
+    transform: translate(-18px, -18px);
+    animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+}
+
+.loader svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.loader svg rect {
+    fill: none;
+    stroke: var(--path);
+    stroke-width: 6px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-dasharray: 192 64 192 64;
+    stroke-dashoffset: 0;
+    animation: pathRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+}
+
+@keyframes pathRect {
+    25% { stroke-dashoffset: 64; }
+    50% { stroke-dashoffset: 128; }
+    75% { stroke-dashoffset: 192; }
+    100% { stroke-dashoffset: 256; }
+}
+
+@keyframes dotRect {
+    25% { transform: translate(0, 0); }
+    50% { transform: translate(18px, -18px); }
+    75% { transform: translate(0, -36px); }
+    100% { transform: translate(-18px, -18px); }
+}
+
+/* Estilos generales */
+.payment-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #161616;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 1px solid var(--main-light);
+}
+
+.payment-container h2 {
+    text-align: center;
+    color: var(--main-dark);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Contenedor del total */
+.total-container {
+    background: var(--main-extra-light);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border: 1px solid var(--main-light);
+}
+
+.total-container p {
+    font-size: 1.1rem;
+    color: var(--contrast-dark);
+    margin: 0;
+    font-weight: 500;
+}
+
+.total-container span {
+    color: var(--main-dark);
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+/* Formulario */
+.payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-group label {
+    font-size: 0.95rem;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.form-control {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--main-light);
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: #161616;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--main-color);
+    box-shadow: 0 0 0 3px rgba(174, 137, 87, 0.2);
+}
+
+.form-control.is-invalid {
+    border-color: var(--error-color);
+}
+
+.form-control.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.2);
+}
+
+/* Filas para campos agrupados */
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+/* Mensajes de error */
+.error-message {
+    color: var(--error-color);
+    font-size: 0.85rem;
+    margin-top: 0.2rem;
+}
+
+/* Botón de envío */
+.submit-btn {
+    background: var(--main-color);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.submit-btn:hover:not(.disabled) {
+    background: var(--main-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submit-btn:active:not(.disabled) {
+    transform: translateY(0);
+}
+
+.submit-btn.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--main-light);
+}
+
+.btn-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+/* Nota de seguridad */
+.security-note {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--main-extra-light);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--contrast-dark);
+    border: 1px solid var(--main-light);
+}
+
+.security-icon {
+    font-size: 1.2rem;
+    color: var(--main-dark);
+}
+
+/* Estilos para el estado de carga */
+
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    background: white;
+    border-radius: 12px;
+    min-height: 300px;
+}
+
+.loading-container p {
+    color: var(--main-dark);
+    font-weight: 500;
+    margin-top: 1rem;
+}
+.loader {
+    --path: #2f3545;
+    --dot: #5628ee;
+    --duration: 3s;
+    width: 44px;
+    height: 44px;
+    position: relative;
+  }
+  
+  .loader:before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    position: absolute;
+    display: block;
+    background: var(--dot);
+    top: 37px;
+    left: 19px;
+    transform: translate(-18px, -18px);
+    animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
+      infinite;
+  }
+  
+  .loader svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .loader svg rect,
+  .loader svg polygon,
+  .loader svg circle {
+    fill: none;
+    stroke: var(--path);
+    stroke-width: 10px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  
+  .loader svg polygon {
+    stroke-dasharray: 145 76 145 76;
+    stroke-dashoffset: 0;
+    animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
+      infinite;
+  }
+  
+  .loader svg rect {
+    stroke-dasharray: 192 64 192 64;
+    stroke-dashoffset: 0;
+    animation: pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
+  }
+  
+  .loader svg circle {
+    stroke-dasharray: 150 50 150 50;
+    stroke-dashoffset: 75;
+    animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
+      infinite;
+  }
+  
+  .loader.triangle {
+    width: 48px;
+  }
+  
+  .loader.triangle:before {
+    left: 21px;
+    transform: translate(-10px, -18px);
+    animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
+      infinite;
+  }
+  
+  @keyframes pathTriangle {
+    33% {
+      stroke-dashoffset: 74;
+    }
+  
+    66% {
+      stroke-dashoffset: 147;
+    }
+  
+    100% {
+      stroke-dashoffset: 221;
+    }
+  }
+  
+  @keyframes dotTriangle {
+    33% {
+      transform: translate(0, 0);
+    }
+  
+    66% {
+      transform: translate(10px, -18px);
+    }
+  
+    100% {
+      transform: translate(-10px, -18px);
+    }
+  }
+  
+  @keyframes pathRect {
+    25% {
+      stroke-dashoffset: 64;
+    }
+  
+    50% {
+      stroke-dashoffset: 128;
+    }
+  
+    75% {
+      stroke-dashoffset: 192;
+    }
+  
+    100% {
+      stroke-dashoffset: 256;
+    }
+  }
+  
+  @keyframes dotRect {
+    25% {
+      transform: translate(0, 0);
+    }
+  
+    50% {
+      transform: translate(18px, -18px);
+    }
+  
+    75% {
+      transform: translate(0, -36px);
+    }
+  
+    100% {
+      transform: translate(-18px, -18px);
+    }
+  }
+  
+  @keyframes pathCircle {
+    25% {
+      stroke-dashoffset: 125;
+    }
+  
+    50% {
+      stroke-dashoffset: 175;
+    }
+  
+    75% {
+      stroke-dashoffset: 225;
+    }
+  
+    100% {
+      stroke-dashoffset: 275;
+    }
+  }
+  
+  .loader {
+    display: inline-block;
+    margin: 0 16px;
+  }
+  
+
+/* Estilos para el estado de error */
+.error-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    color: var(--error-color);
+    text-align: center;
+}
+
+.error-container h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.retry-btn {
+    background: var(--error-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.retry-btn:hover {
+    background: #c62828;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .payment-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .payment-container {
+        padding: 1.2rem;
+    }
+    
+    .payment-container h2 {
+        font-size: 1.5rem;
+    }
+    
+    .submit-btn {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+    }
+}
