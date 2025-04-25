@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🎮 Factura Pixel Store</title>
+    <style type="text/css">
+        /* RESET PARA EMAIL CON MODO OSCURO */
+        body, p, h1, h2, h3 { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            background-color: #0f0f12;
+            color: #e0e0ff;
+            line-height: 1.6;
+        }
+        
+        /* CONTENEDOR PRINCIPAL */
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #1a1a25;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #2d2d3a;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* CABECERA */
+        .header {
+            background: linear-gradient(135deg, #3a2a6e 0%, #1e1a3a 100%);
+            padding: 30px;
+            text-align: center;
+            border-bottom: 4px solid #6e45e2;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+            letter-spacing: 1px;
+        }
+        
+        .header p {
+            color: #c0c0ff;
+            font-size: 16px;
+        }
+        
+        .header::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                #6e45e2 10px,
+                #6e45e2 20px
+            );
+        }
+        
+        /* CONTENIDO */
+        .content {
+            padding: 25px;
+            color: #d0d0f0;
+        }
+        
+        /* TARJETA DE FACTURA */
+        .invoice-card {
+            background: #232330;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #3d3d4a;
+            box-shadow: 0 0 15px rgba(110, 69, 226, 0.1);
+            position: relative;
+        }
+        
+        .invoice-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #6e45e2, #89d4cf, #6e45e2);
+        }
+        
+        /* ENCABEZADO DE FACTURA */
+        .invoice-header {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #3d3d4a;
+        }
+        
+        .invoice-header h2 {
+            color: #a78bfa;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .invoice-header p {
+            color: #b0b0d0;
+            margin: 0;
+        }
+        
+        /* LISTA DE JUEGOS */
+        .game-list {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin: 15px 0;
+        }
+        
+        .game-item {
+            background: rgba(40, 40, 55, 0.5);
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        
+        .game-item:hover {
+            background: rgba(60, 60, 80, 0.7);
+        }
+        
+        .game-name {
+            padding: 12px;
+            color: #e0e0ff;
+        }
+        
+        .game-price {
+            padding: 12px;
+            text-align: right;
+            color: #89d4cf;
+            font-weight: bold;
+        }
+        
+        /* TOTAL */
+        .invoice-total {
+            padding: 15px;
+            text-align: right;
+            font-size: 18px;
+            color: white;
+            background: linear-gradient(135deg, #6e45e2 0%, #3a2a6e 100%);
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 1px solid #8a65ff;
+        }
+        
+        /* BOTÓN */
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #6e45e2 0%, #8a65ff 100%);
+            color: white !important;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            margin: 25px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(110, 69, 226, 0.4);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            box-shadow: 0 6px 20px rgba(110, 69, 226, 0.6);
+        }
+        
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 55%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: rotate(30deg) translate(-30%, -30%); }
+            100% { transform: rotate(30deg) translate(30%, 30%); }
+        }
+        
+        /* FOOTER */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: #151520;
+            color: #a0a0c0;
+            font-size: 12px;
+            border-top: 1px solid #2d2d3a;
+        }
+        
+        .footer p {
+            margin: 5px 0;
+        }
+        
+        /* ELEMENTOS ESPECIALES */
+        .game-icon {
+            font-size: 20px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .pixel-divider {
+            height: 3px;
+            background: repeating-linear-gradient(
+                to right,
+                transparent,
+                transparent 10px,
+                #6e45e2 10px,
+                #6e45e2 20px
+            );
+            margin: 20px 0;
+        }
+        
+        /* COMPATIBILIDAD OUTLOOK */
+        .fallback-font {
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #0f0f12;">
+    <!--[if mso]>
+    <style type="text/css">
+        .email-container {
+            width: 600px !important;
+        }
+        .game-list {
+            width: 100% !important;
+        }
+        .game-item {
+            display: table-row !important;
+        }
+        .game-name, .game-price {
+            display: table-cell !important;
+            padding: 12px !important;
+        }
+        .btn::after {
+            display: none !important;
+        }
+    </style>
+    <![endif]-->
+    
+    <div class="email-container">
+        <div class="header">
+            <h1 class="fallback-font">🎮 FACTURA PIXEL STORE</h1>
+            <p class="fallback-font">¡Tu aventura en la oscuridad comienza!</p>
+        </div>
+        
+        <div class="content">
+            <h2 style="color: #a78bfa; margin-bottom: 15px;" class="fallback-font">¡Hola, jugador nocturno!</h2>
+            
+            <div class="pixel-divider"></div>
+            
+            {% for factura in facturas %}
+            <div class="invoice-card">
+                <div class="invoice-header">
+                    <h2 class="fallback-font">Factura #{{ factura.id }}</h2>
+                    <p class="fallback-font">Fecha: {{ factura.fecha }}</p>
+                </div>
+                
+                <table class="game-list">
+                    {% for juego in factura.juegos %}
+                    <tr class="game-item">
+                        <td class="game-name fallback-font">
+                            <span class="game-icon">
+                                {% if 'granja' in juego.juego.lower() %}🐔
+                                {% elif 'rpg' in juego.juego.lower() %}⚔️
+                                {% elif 'acción' in juego.juego.lower() or 'accion' in juego.juego.lower() %}🔫
+                                {% elif 'deporte' in juego.juego.lower() %}🏀
+                                {% elif 'carrera' in juego.juego.lower() %}🏎️
+                                {% else %}👾{% endif %}
+                            </span>
+                            {{ juego.juego }} (x{{ juego.cantidad }})
+                        </td>
+                        <td class="game-price fallback-font">{{ juego.precio_unitario }} {{ factura.divisa }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                
+                <div class="invoice-total fallback-font">
+                    <strong>TOTAL: {{ factura.total }} {{ factura.divisa }}</strong>
+                </div>
+            </div>
+            {% endfor %}
+            
+            <div class="pixel-divider"></div>
+            
+            <center>
+                <a href="{{ url_tienda }}" class="btn fallback-font">¡VOLVER A LA TIENDA! 🕹️</a>
+                <p style="color: #9090b0; font-size: 14px;" class="fallback-font">
+                    ¿Necesitas ayuda? <a href="mailto:soporte@pixelstore.com" style="color: #8a65ff; text-decoration: none;">Contacta a nuestro equipo</a>
+                </p>
+            </center>
+        </div>
+        
+        <div class="footer">
+            <p class="fallback-font">Gracias por jugar con <strong style="color: #8a65ff;">Pixel Store</strong></p>
+            <p class="fallback-font">© {{ año_actual }} - Todos los derechos reservados</p>
+        </div>
+    </div>
+</body>
+</html>

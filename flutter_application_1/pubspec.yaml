@@ -1,0 +1,55 @@
+name: pixel_store
+description: "Proyecto de QuantumLeap - Tienda digital retro de videojuegos."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # ✅ Íconos estilo iOS
+  cupertino_icons: ^1.0.8
+
+  # ✅ HTTP para consumir APIs y Cloudinary
+  http: ^1.3.0
+
+  # ✅ Carousel animado
+  carousel_slider: ^5.0.0
+
+  # ✅ Fuentes Google
+  google_fonts: ^6.1.0
+
+  # ✅ Animaciones lindas
+  animate_do: ^4.2.0
+  flutter_animate: ^4.5.0
+  animated_text_kit: ^4.2.2
+
+  # ✅ Image picker para seleccionar imágenes desde galería o cámara
+  image_picker: ^1.0.4
+
+  # ✅ Permite manipular archivos de imagen desde paths
+  path_provider: ^2.1.2
+
+  # ✅ Nueva librería intl añadida
+  intl: ^0.17.0  # Librería añadida para soporte de internacionalización
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/fonts/
+
+  fonts:
+    - family: PressStart2P
+      fonts:
+        - asset: assets/fonts/PressStart2P-Regular.ttf

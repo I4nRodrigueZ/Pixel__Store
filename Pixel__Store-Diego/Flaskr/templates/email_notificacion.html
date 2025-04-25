@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Notificación Pixel Store</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ubuntu+Mono:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0d0d1a;
+            background-image: 
+                radial-gradient(circle at 15% 25%, rgba(110, 69, 226, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(110, 69, 226, 0.1) 0%, transparent 40%);
+            color: #e0e0ff;
+            font-family: 'Ubuntu Mono', monospace;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 30px auto;
+            background: rgba(20, 15, 30, 0.95);
+            border: 3px solid #6e45e2;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(110, 69, 226, 0.4);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 5px;
+            width: 100%;
+            background: linear-gradient(90deg, #6e45e2, #89d4cf, #6e45e2);
+        }
+
+        .header {
+            padding: 30px 20px;
+            text-align: center;
+            background: rgba(30, 20, 50, 0.8);
+            border-bottom: 1px solid #3d2e6e;
+        }
+
+        .header h1 {
+            color: #a78bfa;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 20px;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(110, 69, 226, 0.6);
+            letter-spacing: 1px;
+        }
+
+        .content {
+            padding: 30px;
+            line-height: 1.8;
+        }
+
+        .message-box {
+            background: rgba(50, 40, 80, 0.5);
+            border-left: 5px solid #6e45e2;
+            padding: 25px;
+            border-radius: 5px;
+            margin: 20px 0;
+            box-shadow: inset 6px 0 12px -6px rgba(110, 69, 226, 0.5);
+            color: #f0e6ff;
+        }
+
+        .footer {
+            padding: 20px;
+            text-align: center;
+            background: rgba(30, 20, 50, 0.8);
+            border-top: 1px solid #3d2e6e;
+            font-size: 12px;
+            color: #b0b0d0;
+        }
+
+        .pixel-corner {
+            width: 12px;
+            height: 12px;
+            background-color: #6e45e2;
+            position: absolute;
+        }
+
+        .top-left { top: 0; left: 0; border-radius: 0 0 12px 0; }
+        .top-right { top: 0; right: 0; border-radius: 0 0 0 12px; }
+        .bottom-left { bottom: 0; left: 0; border-radius: 0 12px 0 0; }
+        .bottom-right { bottom: 0; right: 0; border-radius: 12px 0 0 0; }
+
+        .glow-text {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 6px #6e45e2; }
+            to { text-shadow: 0 0 14px #89d4cf, 0 0 20px #6e45e2; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="pixel-corner top-left"></div>
+        <div class="pixel-corner top-right"></div>
+
+        <div class="header">
+            <h1 class="glow-text">📢 NOTIFICACIÓN PIXEL STORE</h1>
+        </div>
+
+        <div class="content">
+            <div class="message-box">
+                {{ mensaje|safe }}
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Este mensaje fue generado automáticamente, no respondas a este correo.</p>
+            <p>© {{ current_year if current_year else "2023" }} Pixel Store - Todos los derechos reservados</p>
+        </div>
+
+        <div class="pixel-corner bottom-left"></div>
+        <div class="pixel-corner bottom-right"></div>
+    </div>
+</body>
+</html>
