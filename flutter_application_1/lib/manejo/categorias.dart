@@ -16,7 +16,7 @@ class _GestionCategoriasPageState extends State<GestionCategoriasPage> {
   Map? categoriaSeleccionada;
   final nombreCtrl = TextEditingController();
 
-  final String baseUrl = 'http://192.168.0.4:5000';
+  final String baseUrl = 'http://127.0.0.1:5000';
 
   @override
   void initState() {
