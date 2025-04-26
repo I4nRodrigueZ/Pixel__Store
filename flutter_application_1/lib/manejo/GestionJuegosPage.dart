@@ -23,7 +23,7 @@ class _GestionJuegosPageState extends State<GestionJuegosPage> {
   final stockCtrl = TextEditingController();
   final imagenUrlCtrl = TextEditingController();
 
-  final String baseUrl = 'http://192.168.0.4:5000';
+  final String baseUrl = 'http://127.0.0.1:5000';
   final String cloudName = 'dtdxmx8ly';
   final String uploadPreset = 'ml_default';
 
