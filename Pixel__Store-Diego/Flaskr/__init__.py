@@ -3,7 +3,6 @@ import json
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
-# from flask_restx import Api as ApiRestX 
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
@@ -33,12 +32,15 @@ class CustomJSONEncoder(json.JSONEncoder):
 
 def create_app(config_name='default'):
     app = Flask(__name__)
-
-    # 👇 Aquí justo después de crear la app
     app.json_encoder = CustomJSONEncoder
 
-    # Configuración base de datos
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/quantumleap'
+    # Configuración dinámica de la base de datos
+    if config_name == 'testing':
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
+        app.config['TESTING'] = True
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/quantumleap'
+
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Configuración JWT
@@ -51,31 +53,21 @@ def create_app(config_name='default'):
     app.config['MAIL_PORT'] = 465
     app.config['MAIL_USE_SSL'] = True
     app.config['MAIL_USERNAME'] = 'dguerragomez4@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'ylujlmkprjaulzkx'
+    app.config['MAIL_PASSWORD'] = 'tdfldsbzaqrmznxe'
     app.config['MAIL_DEFAULT_SENDER'] = 'dguerragomez4@gmail.com'
     mail.init_app(app)
 
     CORS(app, supports_credentials=True, resources={
-    r"/*": {
-        "origins": "*",
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"]
-    }
+        r"/*": {
+            "origins": "*",
+            "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"]
+        }
     })
+
     db.init_app(app)
     migrate = Migrate(app, db)
     api = Api(app)
-
-     # 🚧 Preparado para usar Flask-RESTX más adelante (comentado por ahora)
-    # api_restx = ApiRestX(
-    #     app,
-    #     version="1.0",
-    #     title="QuantumLeap API",
-    #     description="Documentación interactiva para los endpoints de la tienda de videojuegos 🎮🛒",
-    #     doc="/docs"
-    # )
-    # api = api_restx  # Si decides usar Flask-RESTX, descomenta esta línea y comenta la de arriba
-
 
     # Endpoints
     api.add_resource(VistaUsuarios, '/usuarios')
@@ -106,13 +98,13 @@ def create_app(config_name='default'):
     api.add_resource(VistaDetalleFactura, '/detalle-factura', '/detalle-factura/<int:id_detalle>')
     api.add_resource(VistaJuegosUsuarioActual, '/mis-juegos')
 
-
-    # Nuevas vistas relacionadas con carrito
+    # Vistas de carrito
     api.add_resource(VistaCarritoUsuarioActual, '/mi-carrito')
     api.add_resource(VistaAgregarAlCarrito, '/carrito/agregar')
     api.add_resource(VistaEditarCantidadCarrito, '/carrito/editar')
     api.add_resource(VistaEliminarDelCarrito, '/carrito/eliminar/<int:juego_id>')
     api.add_resource(VistaGenerarFactura, '/generar-factura')
+
     # Superadmins
     def crear_superadmin():
         superadmin = Usuario.query.filter_by(email='diegoelperron@gmail.com').first()
@@ -151,6 +143,7 @@ def create_app(config_name='default'):
             print("El superadmin ya existe.")
 
     with app.app_context():
+        db.create_all()  # crea tablas si no existen (sirve para SQLite sin migraciones)
         crear_superadmin()
         crear_superadmin2()
 

@@ -27,7 +27,7 @@ import ResenaCrud from './pages/administrador/resena/ResenaCrud';
 import FacturaCrud from './pages/administrador/factura/FacturasCrud';
 import CarritosCRUD from './pages/administrador/carrito/CarritosCrud';
 import DivisasCrud from './pages/administrador/divisa/DivisasCrud';
-
+import Reporte from './pages/administrador/reportes/Reporte.jsx';
 // Vendedor
 import Vendedor from './pages/vendedor/Vendedor';
 
@@ -81,6 +81,7 @@ function AppContent() {
         <Route path="/administrador/factura" element={<FacturaCrud />} />
         <Route path="/administrador/carrito" element={<CarritosCRUD />} />
         <Route path="/administrador/divisa" element={<DivisasCrud />} />
+        <Route path="/administrador/reportes" element={<Reporte/>} />
 
         <Route path="/vendedor" element={<Vendedor />} />
         <Route path="/catalogo" element={<Catalogo />} />

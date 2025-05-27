@@ -65,6 +65,10 @@ const IndexAdmin = () => {
         <Link to="/administrador/promociones" className="crud-btn" data-aos="fade-up" data-aos-duration="1000">
           Promociones
         </Link>
+        {/* Agregar el nuevo botón "Reportes" debajo de Promociones */}
+        <Link to="/administrador/reportes" className="crud-btn" data-aos="fade-up" data-aos-duration="1000">
+          Reportes
+        </Link>
       </div>
     </div>
   );
