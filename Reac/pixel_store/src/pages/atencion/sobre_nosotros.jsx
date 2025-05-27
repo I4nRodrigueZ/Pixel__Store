@@ -31,16 +31,36 @@ const InfoPage = () => {
         </ol>
       </section>
 
-      {/* Info para vendedores */}
-      <section className="section">
-        <h2>📢 Información para Vendedores</h2>
-        <p>
-          Si eres vendedor y subes tu juego a nuestra plataforma, <strong className="red">
-            el juego pasa al control único y exclusivo de los administradores
-          </strong>. Para realizar cualquier cambio, debes comunicarte vía correo a: <br />
-          <strong className="red">dguerragomez4@gmail.com</strong>
-        </p>
-      </section>
+{/* Info para vendedores */}
+<section className="section">
+  <h2>🛍️ ¿Cómo ser vendedor en Pixel Store?</h2>
+  <p>
+    ¿Quieres vender tus juegos o productos digitales en <strong>Pixel Store</strong>? ¡Es muy fácil! Solo sigue estos pasos:
+  </p>
+  <ul>
+    <li>Primero, asegúrate de <strong>estar registrado e iniciar sesión</strong> como usuario en nuestra plataforma.</li>
+    <li>
+      Luego, envíanos al correo <strong className="red">dguerragomez4@gmail.com</strong> la siguiente información:
+      <ul>
+        <li>Nombre completo</li>
+        <li>Apellido</li>
+        <li>Número de contacto</li>
+        <li>Dirección</li>
+        <li>Correo electrónico</li>
+      </ul>
+    </li>
+  </ul>
+  <p>
+    Nuestro equipo revisará tu solicitud y en un <strong>plazo de 2 a 3 días hábiles</strong> recibirás una respuesta con los siguientes pasos para convertirte en vendedor oficial de Pixel Store.
+  </p>
+  <p>
+    <strong className="red">Importante:</strong> una vez seas aceptado como vendedor, 
+    <strong> cualquier solicitud de cambio de contraseña, nombre, correo u otros datos personales</strong> deberá ser enviada directamente al correo <strong className="red">dguerragomez4@gmail.com</strong>, donde validaremos tu identidad y procesaremos el cambio con seguridad.
+  </p>
+  <p> Para realizar cualquier cambio, debes comunicarte vía correo a: <br />
+    <strong className="red">dguerragomez4@gmail.com</strong>
+  </p>
+</section>
 
       {/* Botón para volver */}
       <div className="text-center mt-10">

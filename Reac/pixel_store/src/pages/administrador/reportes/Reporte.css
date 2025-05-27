@@ -1,0 +1,146 @@
+/* Contenedor general */
+.reporte-container {
+    background-color: #0c0c0c;
+    color: #fff;
+    padding: 3rem;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    animation: fadeIn 0.8s ease-out;
+  }
+  
+  /* Título principal */
+  .reporte-header {
+    font-size: 2rem;
+    text-align: center;
+    color: #ae8957;
+    margin-bottom: 3rem;
+  }
+  
+  /* Cada sección con fondo, padding y sombra */
+  .reporte-section {
+    background-color: #1a1a1a;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 0 15px rgba(174, 137, 87, 0.2);
+    animation: slideInUp 0.8s ease-out;
+  }
+  
+  /* Títulos de sección */
+  .section-title {
+    font-size: 1.5rem;
+    color: #ae8957;
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Wrapper para tablas (scroll en móvil) */
+  .table-wrapper {
+    overflow-x: auto;
+  }
+  
+  /* Estilos de la tabla */
+  .reporte-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+  
+  .reporte-table th,
+  .reporte-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #ae8957;
+    font-size: 1rem;
+    text-align: center;
+  }
+  
+  .reporte-table th {
+    background-color: #ae8957;
+    color: #0c0c0c;
+  }
+  
+  /* Grid responsivo para gráficas */
+  .reporte-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .reporte-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    /* Top5 ocupa todo el ancho */
+    .reporte-top5-section {
+      grid-column: 1 / -1;
+    }
+  }
+  
+  /* Wrapper para gráficas */
+  .grafica-wrapper {
+    width: 100%;
+    height: 250px; /* Mayor altura para que se vea más espacioso */
+  }
+  
+  /* Lista Top5 */
+  .reporte-top5 {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .reporte-top5 li {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .reporte-top5 li:hover {
+    transform: translateX(5px);
+    color: #caa873;
+  }
+  
+  /* Botón PDF */
+  .pdf-wrapper {
+    text-align: center;
+    margin-top: 2rem;
+  }
+  
+  .reporte-pdf-btn {
+    background-color: #ae8957;
+    color: #0c0c0c;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    box-shadow: 0 0 8px rgba(174, 137, 87, 0.5);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  
+  .reporte-pdf-btn:hover {
+    background-color: #caa873;
+    transform: scale(1.05);
+  }
+  
+  /* Animaciones */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsive ajustes */
+  @media (max-width: 480px) {
+    .reporte-container { padding: 1.5rem; }
+    .reporte-header { font-size: 1.7rem; }
+    .section-title { font-size: 1.2rem; }
+    .reporte-table th, .reporte-table td {
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  }
+  

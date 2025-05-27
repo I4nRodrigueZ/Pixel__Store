@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from flask import request, jsonify
 from flask_restful import Resource
-#from flask_restx import Resource
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import joinedload
 from decimal import Decimal
@@ -218,54 +217,53 @@ class VistaUsuario(Resource):
         return '', 204
 
 
+
 class VistaJuegos(Resource):
     def get(self):
         """Obtener todos los juegos o filtrar por término de búsqueda y otros filtros."""
-        search_term = request.args.get('q')  # Término de búsqueda general
-        min_price = request.args.get('min_price')  # Precio mínimo
-        max_price = request.args.get('max_price')  # Precio máximo
-        category_id = request.args.get('category_id')  # ID de la categoría
-        in_stock = request.args.get('in_stock')  # Juegos con stock disponible
+        search_term = request.args.get('q')
+        min_price = request.args.get('min_price')
+        max_price = request.args.get('max_price')
+        category_id = request.args.get('category_id')
+        in_stock = request.args.get('in_stock')
 
-        # Consulta base
         query = Juego.query
 
-        # FILTRAR SOLO POR EL TÍTULO
         if search_term:
             query = query.filter(Juego.titulo.ilike(f'%{search_term}%')) 
 
-        # Filtro por rango de precios
         if min_price and min_price.replace('.', '', 1).isdigit():
             query = query.filter(Juego.precio >= float(min_price))
         if max_price and max_price.replace('.', '', 1).isdigit():
             query = query.filter(Juego.precio <= float(max_price))
 
-        # Filtro por categoría
         if category_id and category_id.isdigit():
             query = query.filter(Juego.categoria_id == int(category_id))
 
-        # Filtro por stock disponible
         if in_stock and in_stock.lower() == 'true':
             query = query.filter(Juego.stock > 0)
 
-        # Ejecutar la consulta y devolver los resultados
         juegos = query.all()
         return juegos_schema.dump(juegos), 200  
+
     @jwt_required()
     def post(self):
-        """Crear un nuevo juego."""
-        titulo = Juego( titulo=request.json['titulo'],
-        descripcion=request.json.get('descripcion', ''),
-        precio=request.json['precio'],
-        stock=request.json.get('stock', 0),
-        condicion=request.json['condicion'],
-        categoria_id=request.json['id_categoria'],
-        imagen_url=request.json.get('imagen_url', '')  # Guardamos la imagen
-    )
-        db.session.add(titulo)
-        db.session.commit()
-        return juego_schema.dump(titulo), 201
+        """Crear un nuevo juego asociado al usuario autenticado."""
+        usuario_id = get_jwt_identity()  # 🟢 Aquí obtenemos el ID del usuario del token
 
+        nuevo_juego = Juego(
+            titulo=request.json['titulo'],
+            descripcion=request.json.get('descripcion', ''),
+            precio=request.json['precio'],
+            stock=request.json.get('stock', 0),
+            condicion=request.json['condicion'],
+            categoria_id=request.json['id_categoria'],
+            imagen_url=request.json.get('imagen_url', ''),
+            usuario_id=usuario_id  # 🟢 Asignamos el usuario que crea el juego
+        )
+        db.session.add(nuevo_juego)
+        db.session.commit()
+        return juego_schema.dump(nuevo_juego), 201
 
 class VistaJuego(Resource):
     def get(self, id_juego):
@@ -876,31 +874,21 @@ class VistaDivisas(Resource):
 
     @jwt_required()
     def post(self):
-        datos = request.get_json()
-
-        # Validar presencia de los campos necesarios
-        campos_faltantes = []
-        for campo in ['nombre', 'simbolo', 'tipo_cambio']:  # Cambié tasa_cambio a tipo_cambio
-            if campo not in datos:
-                campos_faltantes.append(campo)
-
-        if campos_faltantes:
-            return {"mensaje": f"Faltan los campos: {', '.join(campos_faltantes)}"}, 400
-
-        # Crear la nueva divisa con los datos recibidos
+        # Crear una nueva divisa con los datos enviados en la solicitud
         nueva_divisa = Divisa(
-            nombre=datos['nombre'],
-            simbolo=datos['simbolo'],
-            tipo_cambio=datos['tipo_cambio']  # Cambié tasa_cambio a tipo_cambio
+            nombre=request.json['nombre'],  # Nombre de la divisa
+            simbolo=request.json['simbolo'],  # Símbolo de la divisa
+            tipo_cambio=request.json['tipo_cambio']  # Tasa de cambio
         )
-
+        
+        # Agregar la nueva divisa a la base de datos
         db.session.add(nueva_divisa)
         try:
             db.session.commit()
             return divisa_schema.dump(nueva_divisa), 201
         except IntegrityError:
             db.session.rollback()
-            return {"mensaje": "Error al crear la divisa (posiblemente ya existe)"}, 409
+            return {"mensaje": "Error al crear la divisa"}, 409
         
 class VistaDivisa(Resource):
     @jwt_required()
@@ -921,7 +909,7 @@ class VistaDivisa(Resource):
         # Actualizar los campos de la divisa con los datos proporcionados
         divisa.nombre = request.json.get('nombre', divisa.nombre)
         divisa.simbolo = request.json.get('simbolo', divisa.simbolo)
-        divisa.tipo_cambio = request.json.get('tipo_cambio', divisa.tipo_cambio)
+        divisa.tasa_cambio = request.json.get('tasa_cambio', divisa.tasa_cambio)
 
         db.session.commit()
         return divisa_schema.dump(divisa), 200

@@ -1,169 +1,140 @@
-/* Estilos generales */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #121212; /* Fondo oscuro */
-    color: #ffffff; /* Texto blanco */
-    overflow-x: hidden;
+  font-family: 'Press Start 2P', cursive;
+  background: linear-gradient(180deg, #0f0f0f, #1a1a2e);
+  color: #ffffff;
 }
 
-.subir-producto-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
+.vendedor-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem;
 }
 
-.header {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #ae8957; /* Título en el color principal */
-    animation: fadeInDown 1.5s ease-in-out;
+.titulo, .subtitulo {
+  text-align: center;
+  color: #00ffc8;
+  text-shadow: 2px 2px 4px #0ff;
+  margin-bottom: 1.5rem;
 }
 
-.header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+.formulario-juego {
+  display: grid;
+  gap: 1rem;
+  background-color: #1e1e2f;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00ffc8;
 }
 
-.header p {
-    font-size: 1.2rem;
-    font-weight: lighter;
+.formulario-juego input,
+.formulario-juego textarea,
+.formulario-juego select {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: none;
+  background-color: #2a2a3f;
+  color: #fff;
 }
 
-/* Formulario de vendedor */
-.form-vendedor {
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    padding: 30px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
-    animation: fadeInUp 1.5s ease-in-out;
+.formulario-juego button {
+  padding: 0.75rem;
+  background-color: #00ffc8;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.formulario-juego button:hover {
+  transform: scale(1.05);
+  background-color: #00ffaa;
 }
 
-label {
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: #ae8957; /* Color de etiquetas acorde al color principal */
-    display: block;
+.preview-img {
+  width: 100px;
+  border-radius: 8px;
+  margin: auto;
 }
 
-input, textarea, select {
-    width: 100%;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 1rem;
-    background-color: #292929; /* Fondo oscuro de inputs */
-    color: #ffffff; /* Texto blanco */
-    outline: none;
-    transition: all 0.3s ease;
+.juegos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
-input:focus, textarea:focus, select:focus {
-    box-shadow: 0px 0px 5px #ae8957; /* Brillo con color principal al foco */
+.juego-card {
+  background-color: #29293d;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00ffc8;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
 }
 
-textarea {
-    resize: none;
+.juego-card:hover {
+  transform: scale(1.03);
 }
 
-/* Botones */
-.btn-primary {
-    width: 100%;
-    padding: 10px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: #ae8957; /* Color de fondo en botones */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+.juego-img {
+  height: 180px;
+  object-fit: cover;
+  width: 100%;
 }
 
-.btn-primary:hover {
-    background-color: #8a6a44; /* Color de hover más oscuro para el botón */
-    transform: scale(1.05);
+.juego-info {
+  padding: 1rem;
 }
 
-.btn-primary:active {
-    transform: scale(0.95);
+.juego-info h3 {
+  margin-bottom: 0.5rem;
+  color: #00ffd9;
 }
 
-/* Animaciones personalizadas */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.juego-info p {
+  font-size: 0.8rem;
+  color: #ccc;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.precio {
+  font-size: 1rem;
+  color: #00ff85;
+  font-weight: bold;
 }
 
-/* Efectos para inputs y botones */
-input[type="text"], input[type="number"], select, textarea {
-    animation: zoomIn 0.6s;
+.acciones {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 1rem 1rem 1rem;
 }
 
-@keyframes zoomIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+.editar, .eliminar {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s ease;
 }
 
-/* Pie de página */
-footer {
-    margin-top: 20px;
-    font-size: 0.8rem;
-    color: #aaaaaa; /* Gris claro para el pie de página */
-    text-align: center;
+.editar {
+  background-color: #ffef00;
+  color: #000;
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-    .form-vendedor {
-        padding: 20px;
-    }
-    .header h1 {
-        font-size: 2rem;
-    }
+.editar:hover {
+  background-color: #fff843;
 }
-.preview-image {
-    width: 100%;
-    max-height: 250px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 10px;
-    animation: zoomIn 0.6s;
-    border: 2px solid #ae8957;
+
+.eliminar {
+  background-color: #ff3b3b;
+  color: #fff;
+}
+
+.eliminar:hover {
+  background-color: #ff6262;
 }

@@ -126,17 +126,21 @@
   left: -10%;
 }
 
-/* Animación de caída estilo Tetris */
-@keyframes tetrisFall {
+/* Animación de entrada con desvanecimiento suave */
+@keyframes fadeIn {
   0% {
-    transform: translateY(-300px) rotate(180deg);
+    opacity: 0;
+    transform: translateY(10px);
   }
-  50% {
-    transform: translateY(50px) rotate(15deg);
-  }
+
   100% {
-    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+.elemento-fade {
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
 /* Animación de brillo (glow) */

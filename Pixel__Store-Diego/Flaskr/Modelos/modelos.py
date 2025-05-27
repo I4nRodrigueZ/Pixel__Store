@@ -70,13 +70,18 @@ class Juego(db.Model):
     descripcion = db.Column(db.String(500), nullable=True)
     precio = db.Column(db.Float, nullable=False)
     stock = db.Column(db.Integer, default=0, nullable=False)
-    condicion = db.Column(db.String(50), nullable=False)  
+    condicion = db.Column(db.String(50), nullable=False)
     categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'), nullable=False)
     imagen_url = db.Column(db.String(500), nullable=True)
+
+    # NUEVO: Relación con el usuario que lo creó
+    usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    usuario = db.relationship('Usuario', backref='juegos')  # Relación inversa
 
     categoria = db.relationship('Categoria', back_populates='juegos')
     resenas = db.relationship('Resena', back_populates='juego', cascade='all, delete-orphan', lazy='dynamic')
     promociones = db.relationship('Promocion', secondary='juegos_promociones', back_populates='juegos')
+
     
     def calcular_precio_con_descuento(self):
         # Aplicar descuentos globales primero
