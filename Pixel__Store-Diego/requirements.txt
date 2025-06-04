@@ -32,3 +32,4 @@ Werkzeug==2.0.3
 flask-restx==1.1.0
 flask-mail==0.9.1
 psycopg2-binary==2.9.6
+gunicorn==21.2.0
