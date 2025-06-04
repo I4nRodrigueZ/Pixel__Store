@@ -1,1 +1,1 @@
-web: gunicorn Flaskr:crear_app()
+web: gunicorn wsgi:app
