@@ -1,3 +1,3 @@
-from Flaskr import crear_app
+from Flaskr import create_app
 
-app = crear_app()
+app = create_app()
