@@ -56,7 +56,7 @@ const Home = () => {
 
       {/* Secciones de Categorías con animaciones consistentes */}
       <Encabezado 
-        titulo="🎮 Acción" 
+        titulo="🔫 Acción" 
         data-aos="fade-up" 
         data-aos-duration="600"
       />
@@ -65,7 +65,7 @@ const Home = () => {
       </div>
 
       <Encabezado 
-        titulo="🎮 Aventura" 
+        titulo="🧭 Aventura" 
         data-aos="fade-up" 
         data-aos-duration="600"
       />
@@ -74,7 +74,7 @@ const Home = () => {
       </div>            
 
       <Encabezado 
-        titulo="🎮 Deportes" 
+        titulo="💀 Terror" 
         data-aos="fade-up" 
         data-aos-duration="600"
       />

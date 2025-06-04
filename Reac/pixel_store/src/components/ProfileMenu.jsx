@@ -34,7 +34,7 @@ const ProfileMenu = ({ onLogout }) => {
   let perfilRuta = "/login"; // fallback por si algo falla
   if (rol === "admin") perfilRuta = "/administrador";
   else if (rol === "usuario") perfilRuta = "/editar-perfil"; // Ruta para editar perfil de usuario
-  else if (rol === "vendedor") perfilRuta = "/panel-vendedor"; // Ruta para panel vendedor
+  else if (rol === "vendedor") perfilRuta = "/vendedor"; // Ruta para panel vendedor
 
   return (
     <div className={`profile-menu ${menuOpen ? "active" : ""}`} ref={menuRef}>

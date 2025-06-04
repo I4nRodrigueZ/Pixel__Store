@@ -22,14 +22,13 @@ const Header = () => {
 
   const hideElements = location.pathname === "/login" || location.pathname.startsWith("/admin");
 
-  // TEMP: contador de carrito (luego lo reemplazas por el real desde contexto o props)
   const cartCount = 0;
 
   return (
     <header className="header-container">
       {/* Logo */}
       <Link to="/" className="logo">
-        <img src={logo} alt="CPIXEL STORE Logo" />
+        <img src={logo} alt="PIXEL STORE Logo" />
       </Link>
 
       {/* Menú de navegación */}
