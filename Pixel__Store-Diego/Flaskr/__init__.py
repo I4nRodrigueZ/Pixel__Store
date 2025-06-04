@@ -39,7 +39,7 @@ def create_app(config_name='default'):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
         app.config['TESTING'] = True
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@localhost/quantumleap'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://quantumleap_lg3c_user:gujWUEoP8bmVxcl4kShmf7ZRwe6jb6tR@dpg-d0vpsdripnbc7385s740-a.oregon-postgres.render.com:5432/quantumleap_lg3c'
 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
