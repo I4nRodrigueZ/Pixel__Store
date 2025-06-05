@@ -89,7 +89,7 @@ class Juego(db.Model):
 
         # Buscar promociones globales activas usando una subconsulta
         promociones_globales = Promocion.query.filter(
-            Promocion.es_global == True, 
+            Promocion.es_global == 1, 
             Promocion.fecha_inicio <= date.today(), 
             Promocion.fecha_fin >= date.today()
         ).all()
