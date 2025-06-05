@@ -788,6 +788,9 @@ class VistaEliminarDelCarrito(Resource):
         return {"mensaje": "Juego eliminado del carrito"}, 200
 
 
+from datetime import date
+from flask_jwt_extended import jwt_required, get_jwt_identity
+
 class VistaCarritoUsuarioActual(Resource):
     @jwt_required()
     def get(self):
@@ -804,15 +807,14 @@ class VistaCarritoUsuarioActual(Resource):
         for detalle in detalles:
             juego = Juego.query.get(detalle.juego_id)
             if not juego:
-                continue  # Si el juego ya no existe, lo ignoramos
+                continue  # Ignorar juegos que ya no existen
 
             precio_unitario = float(juego.precio)
             cantidad = detalle.cantidad
             subtotal = precio_unitario * cantidad
-            subtotal_original = subtotal  # Para aplicar descuentos sin alterar el cálculo base
             descuentos_aplicados = []
 
-            # Aplicar promociones por juego si existen
+            # Aplicar promociones vigentes por juego
             promociones_juego = getattr(juego, 'promociones', [])
             for promocion in promociones_juego:
                 if promocion and promocion.esta_activa():
@@ -823,16 +825,14 @@ class VistaCarritoUsuarioActual(Resource):
                     else:
                         descuento = 0
 
-                    subtotal -= descuento
-                    total -= descuento
-
+                    subtotal -= descuento  # Aplica descuento solo al subtotal
                     descuentos_aplicados.append({
                         "descuento": round(float(descuento), 2),
                         "tipo": promocion.tipo_descuento,
                         "valor": float(promocion.valor_descuento)
                     })
 
-            total += subtotal  # Se suma el subtotal ya con descuentos
+            total += subtotal  # Sumar subtotal ya con descuentos aplicados
 
             resultado.append({
                 "juego_id": juego.id,
@@ -844,11 +844,16 @@ class VistaCarritoUsuarioActual(Resource):
                 "descuentos": descuentos_aplicados
             })
 
-        # Aplicar promoción global si hay
-        promocion_global = Promocion.query.filter_by(es_global=True).first()
-        descuento_global_aplicado = 0.0
+        # Aplicar promoción global vigente
+        hoy = date.today()
+        promocion_global = Promocion.query.filter(
+            Promocion.es_global == True,
+            Promocion.fecha_inicio <= hoy,
+            Promocion.fecha_fin >= hoy
+        ).first()
 
-        if promocion_global and promocion_global.esta_activa():
+        descuento_global_aplicado = 0.0
+        if promocion_global:
             if promocion_global.tipo_descuento == 'Porcentaje':
                 descuento_global_aplicado = total * (float(promocion_global.valor_descuento) / 100)
             elif promocion_global.tipo_descuento == 'Monto_Fijo':
@@ -865,6 +870,7 @@ class VistaCarritoUsuarioActual(Resource):
             "total": total_con_descuento,
             "descuento_global_aplicado": round(descuento_global_aplicado, 2)
         }, 200
+
 
 class VistaDivisas(Resource):
     @jwt_required()
