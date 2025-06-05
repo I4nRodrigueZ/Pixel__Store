@@ -915,7 +915,7 @@ class VistaDivisa(Resource):
         # Actualizar los campos de la divisa con los datos proporcionados
         divisa.nombre = request.json.get('nombre', divisa.nombre)
         divisa.simbolo = request.json.get('simbolo', divisa.simbolo)
-        divisa.tasa_cambio = request.json.get('tasa_cambio', divisa.tasa_cambio)
+        divisa.tasa_cambio = request.json.get('tipo_cambio', divisa.tasa_cambio)
 
         db.session.commit()
         return divisa_schema.dump(divisa), 200
