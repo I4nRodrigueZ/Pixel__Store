@@ -976,9 +976,6 @@ class VistaResenas(Resource):
             
             data = request.get_json()
             
-            # Si es admin, puede especificar usuario_id, de lo contrario usa el suyo
-            usuario_id = data.get('usuario_id') if es_admin else current_user_id
-            
             # Validación de datos
             if not data:
                 return {"mensaje": "No se proporcionaron datos"}, 400
@@ -990,16 +987,22 @@ class VistaResenas(Resource):
                     "campos_requeridos": required_fields
                 }, 400
 
+            # Conversión segura de tipos
+            try:
+                data['juego_id'] = int(data['juego_id'])
+                data['puntuacion'] = int(data['puntuacion'])
+            except (ValueError, TypeError):
+                return {"mensaje": "juego_id y puntuacion deben ser números válidos"}, 400
+
             if not isinstance(data['comentario'], str) or len(data['comentario'].strip()) < 10:
-                return {
-                    "mensaje": "El comentario debe tener al menos 10 caracteres"
-                }, 400
+                return {"mensaje": "El comentario debe tener al menos 10 caracteres"}, 400
                 
             if not 1 <= data['puntuacion'] <= 5:
-                return {
-                    "mensaje": "La puntuación debe estar entre 1 y 5"
-                }, 400
+                return {"mensaje": "La puntuación debe estar entre 1 y 5"}, 400
                 
+            # Si es admin, puede especificar usuario_id, de lo contrario usa el suyo
+            usuario_id = data.get('usuario_id') if es_admin else current_user_id
+            
             # Verificar si el usuario ya reseñó este juego (solo para no admins)
             if not es_admin:
                 existe_resena = Resena.query.filter_by(
@@ -1012,13 +1015,15 @@ class VistaResenas(Resource):
                         "mensaje": "Ya has creado una reseña para este juego",
                         "resena_existente": resena_schema.dump(existe_resena)
                     }, 409
-                
-            # Crear nueva reseña
+            
+            # Crear nueva reseña con editada explícitamente como False
             nueva_resena = Resena(
                 comentario=data['comentario'].strip(),
                 puntuacion=data['puntuacion'],
                 usuario_id=usuario_id,
-                juego_id=data['juego_id']
+                juego_id=data['juego_id'],
+                editada=False,  # Valor booleano explícito
+                fecha_edicion=None
             )
             
             db.session.add(nueva_resena)
@@ -1038,7 +1043,6 @@ class VistaResenas(Resource):
                 "mensaje": "Error al crear reseña",
                 "error": str(e)
             }, 500
-
 
 class VistaResena(Resource):
     @jwt_required(optional=True)
@@ -1098,12 +1102,22 @@ class VistaResena(Resource):
                 resena.comentario = data['comentario'].strip()
                 
             if 'puntuacion' in data:
-                if not 1 <= data['puntuacion'] <= 5:
-                    return {
-                        "mensaje": "La puntuación debe estar entre 1 y 5"
-                    }, 400
-                resena.puntuacion = data['puntuacion']
-                
+                try:
+                    puntuacion = int(data['puntuacion'])
+                    if not 1 <= puntuacion <= 5:
+                        return {"mensaje": "La puntuación debe estar entre 1 y 5"}, 400
+                    resena.puntuacion = puntuacion
+                except (ValueError, TypeError):
+                    return {"mensaje": "La puntuación debe ser un número válido"}, 400
+            
+            # Manejo seguro del campo editada
+            if 'editada' in data:
+                # Conversión segura a booleano
+                if isinstance(data['editada'], str):
+                    resena.editada = data['editada'].lower() in ('true', '1', 't')
+                else:
+                    resena.editada = bool(data['editada'])
+            
             # Marcar como editada (solo si no es admin para tracking)
             if not es_admin:
                 resena.editada = True
