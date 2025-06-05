@@ -844,7 +844,7 @@ class VistaCarritoUsuarioActual(Resource):
                 "descuentos": descuentos_aplicados
             })
 
-        # Aplicar promoción global vigente
+        # Aplicar promoción global vigente filtrando por fechas
         hoy = date.today()
         promocion_global = Promocion.query.filter(
             Promocion.es_global == True,
