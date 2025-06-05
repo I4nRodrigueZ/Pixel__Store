@@ -976,10 +976,11 @@ class VistaResenas(Resource):
             
             data = request.get_json()
             
-            # Validación de datos
+            # Validación básica
             if not data:
                 return {"mensaje": "No se proporcionaron datos"}, 400
                 
+            # Validación de campos requeridos
             required_fields = ['comentario', 'puntuacion', 'juego_id']
             if not all(field in data for field in required_fields):
                 return {
@@ -987,27 +988,29 @@ class VistaResenas(Resource):
                     "campos_requeridos": required_fields
                 }, 400
 
-            # Conversión segura de tipos
+            # Validación de tipos
             try:
-                data['juego_id'] = int(data['juego_id'])
-                data['puntuacion'] = int(data['puntuacion'])
+                juego_id = int(data['juego_id'])
+                puntuacion = int(data['puntuacion'])
             except (ValueError, TypeError):
                 return {"mensaje": "juego_id y puntuacion deben ser números válidos"}, 400
 
-            if not isinstance(data['comentario'], str) or len(data['comentario'].strip()) < 10:
+            # Validación de contenido
+            comentario = data['comentario'].strip()
+            if len(comentario) < 10:
                 return {"mensaje": "El comentario debe tener al menos 10 caracteres"}, 400
                 
-            if not 1 <= data['puntuacion'] <= 5:
+            if not 1 <= puntuacion <= 5:
                 return {"mensaje": "La puntuación debe estar entre 1 y 5"}, 400
                 
-            # Si es admin, puede especificar usuario_id, de lo contrario usa el suyo
+            # Determinar usuario_id
             usuario_id = data.get('usuario_id') if es_admin else current_user_id
             
-            # Verificar si el usuario ya reseñó este juego (solo para no admins)
+            # Verificar reseña existente (solo para no admins)
             if not es_admin:
                 existe_resena = Resena.query.filter_by(
                     usuario_id=usuario_id,
-                    juego_id=data['juego_id']
+                    juego_id=juego_id
                 ).first()
                 
                 if existe_resena:
@@ -1016,14 +1019,12 @@ class VistaResenas(Resource):
                         "resena_existente": resena_schema.dump(existe_resena)
                     }, 409
             
-            # Crear nueva reseña con editada explícitamente como False
+            # Crear nueva reseña (sin pasar editada, usará el valor por defecto)
             nueva_resena = Resena(
-                comentario=data['comentario'].strip(),
-                puntuacion=data['puntuacion'],
+                comentario=comentario,
+                puntuacion=puntuacion,
                 usuario_id=usuario_id,
-                juego_id=data['juego_id'],
-                editada=False,  # Valor booleano explícito
-                fecha_edicion=None
+                juego_id=juego_id
             )
             
             db.session.add(nueva_resena)
