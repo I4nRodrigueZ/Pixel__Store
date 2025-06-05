@@ -28,7 +28,8 @@ class DetalleCarrito(db.Model):
     juego = db.relationship('Juego', backref='detalles_carrito')
     carrito = db.relationship('Carrito', backref='detalles')
 
-juegos_promociones = db.Table('juegos_promociones',
+juegos_promociones = db.Table(
+    'juegos_promociones',
     db.Column('juego_id', db.Integer, db.ForeignKey('juego.id'), primary_key=True),
     db.Column('promocion_id', db.Integer, db.ForeignKey('promocion.id'), primary_key=True)
 )
@@ -65,6 +66,8 @@ class Usuario(db.Model):
         return check_password_hash(self.contrasena_hash, password)
 
 class Juego(db.Model):
+    __tablename__ = 'juego'
+
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(100), nullable=False)
     descripcion = db.Column(db.String(500), nullable=True)
@@ -74,7 +77,6 @@ class Juego(db.Model):
     categoria_id = db.Column(db.Integer, db.ForeignKey('categoria.id'), nullable=False)
     imagen_url = db.Column(db.String(500), nullable=True)
 
-    # NUEVO: Relación con el usuario que lo creó
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     usuario = db.relationship('Usuario', backref='juegos')  # Relación inversa
 
@@ -82,33 +84,32 @@ class Juego(db.Model):
     resenas = db.relationship('Resena', back_populates='juego', cascade='all, delete-orphan', lazy='dynamic')
     promociones = db.relationship('Promocion', secondary='juegos_promociones', back_populates='juegos')
 
-    
     def calcular_precio_con_descuento(self):
-        # Aplicar descuentos globales primero
+        hoy = date.today()
         precio_final = float(self.precio)
 
-        # Buscar promociones globales activas usando una subconsulta
+        # Descuentos globales activos
         promociones_globales = Promocion.query.filter(
-            Promocion.es_global == 1, 
-            Promocion.fecha_inicio <= date.today(), 
-            Promocion.fecha_fin >= date.today()
+            Promocion.es_global.is_(True),
+            Promocion.fecha_inicio <= hoy,
+            Promocion.fecha_fin >= hoy
         ).all()
 
         for promocion in promociones_globales:
             if promocion.tipo_descuento == 'Porcentaje':
-                precio_final -= (precio_final * float(promocion.valor_descuento) / 100)  # Convertir a float
+                precio_final -= (precio_final * float(promocion.valor_descuento) / 100)
             elif promocion.tipo_descuento == 'Monto_Fijo':
-                precio_final -= float(promocion.valor_descuento)  # Convertir a float
+                precio_final -= float(promocion.valor_descuento)
 
-        # Aplicar descuentos específicos del juego (si hay)
+        # Descuentos específicos del juego
         for promocion in self.promociones:
-            if promocion.fecha_inicio <= date.today() <= promocion.fecha_fin:
+            if promocion.fecha_inicio <= hoy <= promocion.fecha_fin:
                 if promocion.tipo_descuento == 'Porcentaje':
-                    precio_final -= (precio_final * float(promocion.valor_descuento) / 100)  # Convertir a float
+                    precio_final -= (precio_final * float(promocion.valor_descuento) / 100)
                 elif promocion.tipo_descuento == 'Monto_Fijo':
-                    precio_final -= float(promocion.valor_descuento)  # Convertir a float
+                    precio_final -= float(promocion.valor_descuento)
 
-        return max(precio_final, 0)  # Nos aseguramos de que no sea un precio negativo
+        return max(precio_final, 0)
 
 class Categoria(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -210,6 +211,7 @@ class Resena(db.Model):
 
 class Promocion(db.Model):
     __tablename__ = 'promocion'
+    
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     tipo_descuento = db.Column(db.Enum('Porcentaje', 'Monto_Fijo', name='tipo_descuento_enum'), nullable=False)
@@ -218,7 +220,8 @@ class Promocion(db.Model):
     fecha_fin = db.Column(db.Date, nullable=False)
     es_global = db.Column(db.Boolean, default=False)
 
-    juegos = db.relationship('Juego', secondary='juegos_promociones', back_populates='promociones', lazy='joined')  # Cambiado a lazy='joined'
+    # Se eliminó lazy='joined' para evitar errores de JOIN innecesarios
+    juegos = db.relationship('Juego', secondary='juegos_promociones', back_populates='promociones')
     
     def esta_activa(self):
         hoy = date.today()
