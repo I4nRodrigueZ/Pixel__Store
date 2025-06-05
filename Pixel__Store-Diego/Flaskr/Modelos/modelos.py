@@ -182,12 +182,12 @@ class Resena(db.Model):
     juego_id = db.Column(db.Integer, db.ForeignKey('juego.id', ondelete='CASCADE'), nullable=False)
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuario.id', ondelete='CASCADE'), nullable=False)
     puntuacion = db.Column(db.Integer, nullable=False)
-    comentario = db.Column(db.Text, nullable=False)  # Cambiado a nullable=False
+    comentario = db.Column(db.Text, nullable=False)
     fecha = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-    editada = db.Column(db.Boolean, default=False)
+    editada = db.Column(db.Boolean, default=False, nullable=False)  # Cambiado a nullable=False
     fecha_edicion = db.Column(db.DateTime, nullable=True)
     
-    # Relaciones mejoradas
+    # Relaciones
     juego = db.relationship('Juego', back_populates='resenas')
     usuario = db.relationship('Usuario', back_populates='resenas')
     
@@ -195,13 +195,21 @@ class Resena(db.Model):
         db.CheckConstraint('puntuacion >= 1 AND puntuacion <= 5', name='check_puntuacion_rango'),
     )
     
-    def __init__(self, comentario, puntuacion, usuario_id, juego_id):
+    def __init__(self, comentario, puntuacion, usuario_id, juego_id, **kwargs):
+        """
+        Constructor mejorado para manejar todos los campos posibles
+        """
         self.comentario = comentario
         self.puntuacion = puntuacion
         self.usuario_id = usuario_id
         self.juego_id = juego_id
+        self.editada = kwargs.get('editada', False)  # Valor por defecto False
+        self.fecha_edicion = kwargs.get('fecha_edicion')  # None por defecto
 
     def actualizar(self, comentario=None, puntuacion=None):
+        """
+        Método para actualizar la reseña
+        """
         if comentario:
             self.comentario = comentario
         if puntuacion:
