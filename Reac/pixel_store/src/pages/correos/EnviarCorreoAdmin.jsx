@@ -40,8 +40,8 @@ const EnviarCorreoAdmin = () => {
       const token = localStorage.getItem("token");
       const url =
         modo === "todos"
-          ? "http://localhost:5000/admin/notificar-todos"
-          : "http://localhost:5000/admin/notificar";
+          ? "https://pixel-store-nii6.onrender.com/admin/notificar-todos"
+          : "https://pixel-store-nii6.onrender.com/admin/notificar";
 
       const dataToSend =
         modo === "todos"

@@ -17,7 +17,7 @@ const DetalleFactura = () => {
     const obtenerFactura = async () => {
       try {
         const token = localStorage.getItem('token')
-        const response = await axios.get(`http://localhost:5000/factura/${id_factura}`, {
+        const response = await axios.get(`https://pixel-store-nii6.onrender.com/factura/${id_factura}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

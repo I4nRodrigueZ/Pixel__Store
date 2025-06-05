@@ -17,7 +17,7 @@ const FacturasCRUD = () => {
 
   const fetchFacturas = async () => {
     try {
-      const response = await fetch("http://localhost:5000/facturas", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/facturas", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -35,7 +35,7 @@ const FacturasCRUD = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/factura/${id}`, {
+      const response = await fetch(`https://pixel-store-nii6.onrender.com/factura/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

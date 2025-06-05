@@ -26,7 +26,7 @@ const Divisas = () => {
   const fetchDivisas = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:5000/divisas", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/divisas", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +76,7 @@ const Divisas = () => {
       let response;
       if (editMode) {
         // Actualizar divisa existente
-        response = await fetch(`http://localhost:5000/divisa/${currentDivisa.id}`, {
+        response = await fetch(`https://pixel-store-nii6.onrender.com/divisa/${currentDivisa.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -86,7 +86,7 @@ const Divisas = () => {
         });
       } else {
         // Crear nueva divisa
-        response = await fetch("http://localhost:5000/divisas", {
+        response = await fetch("https://pixel-store-nii6.onrender.com/divisas", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -138,7 +138,7 @@ const Divisas = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:5000/divisa/${id}`, {
+      const response = await fetch(`https://pixel-store-nii6.onrender.com/divisa/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

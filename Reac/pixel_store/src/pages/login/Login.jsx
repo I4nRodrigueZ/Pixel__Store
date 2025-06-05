@@ -4,6 +4,8 @@ import "./Login.css";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [showAchievement, setShowAchievement] = useState(false);
+  const [achievementMessage, setAchievementMessage] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -11,10 +13,16 @@ const Login = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const showAchievementModal = (message) => {
+    setAchievementMessage(message);
+    setShowAchievement(true);
+    setTimeout(() => setShowAchievement(false), 3500);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -26,35 +34,35 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Inicio de sesión exitoso");
-        
-        // 🪪 Guardar datos importantes en localStorage
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("rol", data.rol); // 💾 Guardar rol
-        localStorage.setItem("id_carrito", data.id_carrito);
-        localStorage.setItem("id_usuario", data.id_usuario); // 💾 Guardar id_usuario
+        showAchievementModal("¡Inicio de sesión exitoso! 🎮");
 
-        // 🔀 Redirección según el rol
-        switch (data.rol) {
-          case "admin":
-            navigate("/administrador");
-            break;
-          case "usuario":
-            navigate("/catalogo");
-            break;
-          case "vendedor":
-            navigate("/vendedor");
-            break;
-          default:
-            navigate("/");
-            break;
-        }
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("rol", data.rol);
+        localStorage.setItem("id_carrito", data.id_carrito);
+        localStorage.setItem("id_usuario", data.id_usuario);
+
+        setTimeout(() => {
+          switch (data.rol) {
+            case "admin":
+              navigate("/administrador");
+              break;
+            case "usuario":
+              navigate("/catalogo");
+              break;
+            case "vendedor":
+              navigate("/vendedor");
+              break;
+            default:
+              navigate("/");
+              break;
+          }
+        }, 3500);
       } else {
-        alert(data.mensaje || "Error en el inicio de sesión");
+        showAchievementModal(data.mensaje || "Error en el inicio de sesión 🚫");
       }
     } catch (error) {
       console.error("Error al conectar con el servidor:", error);
-      alert("Hubo un problema al conectar con el servidor.");
+      showAchievementModal("Problema al conectar con el servidor 🤖");
     }
   };
 
@@ -107,10 +115,77 @@ const Login = () => {
         </form>
       </div>
 
-      {/* Meteoritos para que sea bien cósmico 🚀 */}
+      {/* Logro flotante arriba */}
+      {showAchievement && (
+        <div className="achievement">
+          <div className="achievement-content">
+            <div className="icon-trophy">🏆</div>
+            <div className="message">{achievementMessage}</div>
+          </div>
+        </div>
+      )}
+
+      {/* Meteoritos cósmicos */}
       <div className="meteor"></div>
       <div className="meteor"></div>
       <div className="meteor"></div>
+
+      {/* CSS interno para el logro */}
+      <style>{`
+        .achievement {
+          position: fixed;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.8);
+          border: 2px solid #d4af37;
+          color: #f7f1e1;
+          padding: 20px 40px;
+          border-radius: 15px;
+          box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          font-family: 'Press Start 2P', cursive;
+          font-size: 14px;
+          animation: slide-down 0.5s ease-out, fade-out 0.5s 3s forwards;
+        }
+
+        .achievement-content {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+
+        .icon-trophy {
+          font-size: 28px;
+          color: #ffd700;
+          text-shadow: 0 0 5px #ffd700;
+        }
+
+        .message {
+          max-width: 400px;
+          line-height: 1.4;
+        }
+
+        @keyframes slide-down {
+          0% {
+            transform: translateX(-50%) translateY(-60px);
+            opacity: 0;
+          }
+          100% {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+          }
+        }
+
+        @keyframes fade-out {
+          to {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-60px);
+          }
+        }
+      `}</style>
     </div>
   );
 };

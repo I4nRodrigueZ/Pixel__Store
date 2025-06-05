@@ -16,7 +16,7 @@ const ProductDetail = () => {
     const [nuevaResena, setNuevaResena] = useState({
         comentario: "",
         puntuacion: 5,
-        juego_id: id
+        juego_id: parseInt(id) // Asegurar que es número desde el inicio
     });
     const [mostrarFormResena, setMostrarFormResena] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
@@ -30,29 +30,30 @@ const ProductDetail = () => {
 
     const fetchJuego = useCallback(async () => {
         try {
-            const response = await fetch(`http://localhost:5000/juego/${id}`);
+            const response = await fetch(`https://pixel-store-nii6.onrender.com/juego/${id}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
-            if (response.ok) {
-                setJuego({
-                    ...data,
-                    imagenes: [
-                        data.imagen_url,
-                        "https://via.placeholder.com/600x400/222/ffd54f?text=Game+Preview",
-                        "https://via.placeholder.com/600x400/222/ffd54f?text=Gameplay"
-                    ]
-                });
-                fetchResenas(1);
-                
-                // Mostrar alerta si el stock es 0
-                if (data.stock <= 0) {
-                    setAlertMessage("Este producto está actualmente agotado. ¡Vuelve pronto!");
-                    setShowStockAlert(true);
-                }
-            } else {
-                setError(data.mensaje || "Error al cargar el juego.");
+            
+            setJuego({
+                ...data,
+                imagenes: [
+                    data.imagen_url,
+                    "https://via.placeholder.com/600x400/222/ffd54f?text=Game+Preview",
+                    "https://via.placeholder.com/600x400/222/ffd54f?text=Gameplay"
+                ]
+            });
+            
+            await fetchResenas(1);
+            
+            if (data.stock <= 0) {
+                setAlertMessage("Este producto está actualmente agotado. ¡Vuelve pronto!");
+                setShowStockAlert(true);
             }
         } catch (error) {
-            setError("No se pudo conectar con el servidor.");
+            console.error("Error fetching game:", error);
+            setError(error.message || "No se pudo conectar con el servidor.");
         } finally {
             setLoading(false);
         }
@@ -60,19 +61,22 @@ const ProductDetail = () => {
 
     const fetchResenas = async (pagina = 1) => {
         try {
-            const response = await fetch(`http://localhost:5000/resenas?juego_id=${id}&pagina=${pagina}&por_pagina=5`);
+            const response = await fetch(
+                `https://pixel-store-nii6.onrender.com/resenas?juego_id=${id}&pagina=${pagina}&por_pagina=5`
+            );
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
             const data = await response.json();
             
-            if (response.ok) {
-                setResenas(data.resenas || []);
-                setPaginacion({
-                    paginaActual: data.pagina || 1,
-                    totalPaginas: data.paginas || 1,
-                    totalResenas: data.total || 0
-                });
-            }
+            setResenas(data.resenas || []);
+            setPaginacion({
+                paginaActual: data.pagina || 1,
+                totalPaginas: data.paginas || 1,
+                totalResenas: data.total || 0
+            });
         } catch (error) {
-            console.error("Error al cargar reseñas:", error);
+            console.error("Error fetching reviews:", error);
         }
     };
 
@@ -84,7 +88,6 @@ const ProductDetail = () => {
             return;
         }
 
-        // Verificar stock antes de cualquier acción
         if (juego.stock <= 0) {
             setAlertMessage("Este producto está agotado y no se puede agregar al carrito.");
             setShowStockAlert(true);
@@ -92,7 +95,7 @@ const ProductDetail = () => {
         }
 
         try {
-            const response = await fetch("http://localhost:5000/carrito/agregar", {
+            const response = await fetch("https://pixel-store-nii6.onrender.com/carrito/agregar", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -104,21 +107,21 @@ const ProductDetail = () => {
                 })
             });
 
-            const data = await response.json();
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.mensaje || "Error al procesar tu solicitud");
+            }
 
-            if (response.ok) {
-                if (action === "Agregar al carrito") {
-                    setAlertMessage("¡Producto agregado al carrito con éxito!");
-                    setShowAddedAlert(true);
-                } else if (action === "Comprar") {
-                    navigate("/carrito");
-                }
-            } else {
-                setAlertMessage(data.mensaje || "Error al procesar tu solicitud");
-                setShowLoginAlert(true);
+            const data = await response.json();
+            if (action === "Agregar al carrito") {
+                setAlertMessage("¡Producto agregado al carrito con éxito!");
+                setShowAddedAlert(true);
+            } else if (action === "Comprar") {
+                navigate("/carrito");
             }
         } catch (err) {
-            setAlertMessage("Error de conexión con el servidor");
+            console.error("Error in cart action:", err);
+            setAlertMessage(err.message || "Error de conexión con el servidor");
             setShowLoginAlert(true);
         }
     };
@@ -133,58 +136,69 @@ const ProductDetail = () => {
             return;
         }
 
-        if (nuevaResena.comentario.trim().length < 10) {
+        // Validación mejorada del comentario
+        const comentario = nuevaResena.comentario.trim();
+        if (comentario.length < 10) {
             setAlertMessage("El comentario debe tener al menos 10 caracteres");
             setShowLoginAlert(true);
             return;
         }
 
         try {
-            const response = await fetch("http://localhost:5000/resenas", {
+            // Preparar payload con tipos correctos
+            const payload = {
+                comentario: comentario,
+                puntuacion: Number(nuevaResena.puntuacion),
+                juego_id: Number(id)
+            };
+
+            console.log("Enviando reseña:", payload); // Para depuración
+
+            const response = await fetch("https://pixel-store-nii6.onrender.com/resenas", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`
                 },
-                body: JSON.stringify({
-                    comentario: nuevaResena.comentario,
-                    puntuacion: nuevaResena.puntuacion,
-                    juego_id: id
-                })
+                body: JSON.stringify(payload)
             });
 
-            const data = await response.json();
-
-            if (response.ok) {
-                fetchResenas(paginacion.paginaActual);
-                setNuevaResena({
-                    comentario: "",
-                    puntuacion: 5,
-                    juego_id: id
-                });
-                setMostrarFormResena(false);
-                setAlertMessage("¡Reseña publicada con éxito!");
-                setShowAddedAlert(true);
-            } else {
-                setAlertMessage(data.mensaje || "Error al enviar la reseña");
-                setShowLoginAlert(true);
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Error del servidor:", errorData);
+                throw new Error(errorData.mensaje || "Error al enviar reseña");
             }
+
+            const data = await response.json();
+            console.log("Reseña creada:", data);
+
+            // Actualizar estado y UI
+            await fetchResenas(paginacion.paginaActual);
+            setNuevaResena({
+                comentario: "",
+                puntuacion: 5,
+                juego_id: parseInt(id)
+            });
+            setMostrarFormResena(false);
+            setAlertMessage("¡Reseña publicada con éxito!");
+            setShowAddedAlert(true);
         } catch (err) {
-            setAlertMessage("Error de conexión al servidor");
+            console.error("Error al enviar reseña:", err);
+            setAlertMessage(err.message || "Error al enviar la reseña");
             setShowLoginAlert(true);
         }
     };
 
     const handleResenaChange = (e) => {
         const { name, value } = e.target;
-        setNuevaResena({
-            ...nuevaResena,
-            [name]: name === 'puntuacion' ? parseInt(value) : value
-        });
+        setNuevaResena(prev => ({
+            ...prev,
+            [name]: name === 'puntuacion' ? Math.min(5, Math.max(1, parseInt(value) || 0)) : value
+        }));
     };
 
     const calcularPromedioResenas = () => {
-        if (resenas.length === 0) return 0;
+        if (!resenas.length) return 0;
         const suma = resenas.reduce((acc, resena) => acc + resena.puntuacion, 0);
         return (suma / resenas.length).toFixed(1);
     };
@@ -260,7 +274,7 @@ const ProductDetail = () => {
     const precioConDescuento = juego.precio_con_descuento || juego.precio;
     const tieneDescuento = juego.precio_con_descuento && juego.precio_con_descuento < juego.precio;
     const porcentajeDescuento = tieneDescuento 
-        ? (((juego.precio - juego.precio_con_descuento) / juego.precio) * 100).toFixed(0) 
+        ? Math.round(((juego.precio - juego.precio_con_descuento) / juego.precio) * 100)
         : null;
 
     return (
@@ -280,6 +294,10 @@ const ProductDetail = () => {
                             src={juego.imagenes[selectedImage]} 
                             alt={juego.titulo} 
                             className="product-image" 
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "https://via.placeholder.com/600x400/222/ccc?text=Imagen+no+disponible";
+                            }}
                         />
                         {juego.stock > 0 && <div className="image-badge">NUEVO</div>}
                     </div>
@@ -291,6 +309,10 @@ const ProductDetail = () => {
                                 alt={`Preview ${index + 1}`}
                                 className={`thumbnail ${selectedImage === index ? 'active' : ''}`}
                                 onClick={() => setSelectedImage(index)}
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "https://via.placeholder.com/100x100/222/ccc?text=Preview";
+                                }}
                             />
                         ))}
                     </div>
@@ -417,7 +439,10 @@ const ProductDetail = () => {
                             <label>Puntuación:</label>
                             <StarRatingInput 
                                 rating={nuevaResena.puntuacion} 
-                                setRating={(val) => setNuevaResena({...nuevaResena, puntuacion: val})} 
+                                setRating={(val) => setNuevaResena(prev => ({
+                                    ...prev,
+                                    puntuacion: val
+                                }))} 
                             />
                         </div>
                         <div className="form-group">

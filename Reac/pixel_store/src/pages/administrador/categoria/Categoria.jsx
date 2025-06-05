@@ -16,7 +16,7 @@ const CategoriasCRUD = () => {
   // Obtener categorías
   const fetchCategorias = async () => {
     try {
-      const response = await fetch("http://localhost:5000/categorias", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/categorias", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -45,8 +45,8 @@ const CategoriasCRUD = () => {
     e.preventDefault();
 
     const url = editingCategoryId
-      ? `http://localhost:5000/categoria/${editingCategoryId}`
-      : "http://localhost:5000/categorias";
+      ? `https://pixel-store-nii6.onrender.com/categoria/${editingCategoryId}`
+      : "https://pixel-store-nii6.onrender.com/categorias";
     const method = editingCategoryId ? "PUT" : "POST";
 
     try {
@@ -83,7 +83,7 @@ const CategoriasCRUD = () => {
   // Manejar eliminación de una categoría
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/categoria/${id}`, {
+      const response = await fetch(`https://pixel-store-nii6.onrender.com/categoria/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

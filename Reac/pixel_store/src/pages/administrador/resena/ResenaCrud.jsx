@@ -45,7 +45,7 @@ const ResenasCRUD = () => {
 
   const fetchResenas = async () => {
     try {
-      const response = await fetch("http://localhost:5000/resenas", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/resenas", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ const ResenasCRUD = () => {
 
   const fetchJuegos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/juegos", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/juegos", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           'Content-Type': 'application/json'
@@ -92,7 +92,7 @@ const ResenasCRUD = () => {
 
   const fetchUsuarios = async () => {
     try {
-      const response = await fetch("http://localhost:5000/usuarios", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/usuarios", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
           'Content-Type': 'application/json'
@@ -127,8 +127,8 @@ const ResenasCRUD = () => {
     }
 
     const url = editingId
-      ? `http://localhost:5000/resena/${editingId}`
-      : "http://localhost:5000/resenas";
+      ? `https://pixel-store-nii6.onrender.com/resena/${editingId}`
+      : "https://pixel-store-nii6.onrender.com/resenas";
     const method = editingId ? "PUT" : "POST";
 
     try {
@@ -179,7 +179,7 @@ const ResenasCRUD = () => {
     if (!window.confirm("¿Estás seguro de eliminar esta reseña?")) return;
     
     try {
-      const response = await fetch(`http://localhost:5000/resena/${id}`, {
+      const response = await fetch(`https://pixel-store-nii6.onrender.com/resena/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

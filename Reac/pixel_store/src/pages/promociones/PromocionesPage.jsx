@@ -17,7 +17,7 @@ const PromocionesPage = () => {
 
   const fetchJuegosPromocionados = async () => {
     try {
-      const response = await fetch("http://localhost:5000/juegos-promocionados");
+      const response = await fetch("https://pixel-store-nii6.onrender.com/juegos-promocionados");
       const data = await response.json();
       if (response.ok) {
         setJuegosPromo(data);

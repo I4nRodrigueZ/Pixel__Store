@@ -19,7 +19,7 @@ const CarritosCRUD = () => {
 
   const fetchCarritos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/carritos", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/carritos", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -37,7 +37,7 @@ const CarritosCRUD = () => {
 
   const fetchJuegos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/juegos");
+      const response = await fetch("https://pixel-store-nii6.onrender.com/juegos");
       const data = await response.json();
       if (response.ok) {
         setJuegos(data);

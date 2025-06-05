@@ -14,7 +14,7 @@ const CarritoUsuario = () => {
 
     const obtenerCarrito = async () => {
         try {
-            const response = await fetch("http://localhost:5000/mi-carrito", {
+            const response = await fetch("https://pixel-store-nii6.onrender.com/mi-carrito", {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -40,7 +40,7 @@ const CarritoUsuario = () => {
         if (nuevaCantidad < 1) return;
 
         try {
-            await fetch("http://localhost:5000/carrito/editar", {
+            await fetch("https://pixel-store-nii6.onrender.com/carrito/editar", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -57,7 +57,7 @@ const CarritoUsuario = () => {
 
     const eliminarJuego = async (juegoId) => {
         try {
-            await fetch(`http://localhost:5000/carrito/eliminar/${juegoId}`, {
+            await fetch(`https://pixel-store-nii6.onrender.com/carrito/eliminar/${juegoId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,

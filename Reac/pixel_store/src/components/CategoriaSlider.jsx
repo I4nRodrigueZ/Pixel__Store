@@ -10,7 +10,7 @@ const CategoriaSlider = ({ titulo, categoriaId }) => {
   const sliderRef = useRef(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/juegos?category_id=${categoriaId}`)
+    fetch(`https://pixel-store-nii6.onrender.com/juegos?category_id=${categoriaId}`)
       .then((res) => res.json())
       .then((data) => setJuegos(data))
       .catch((err) => console.error("Error cargando juegos:", err));

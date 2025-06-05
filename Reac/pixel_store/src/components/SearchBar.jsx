@@ -23,7 +23,7 @@ const SearchBar = () => {
 
   const fetchCategorias = async () => {
     try {
-      const response = await fetch("http://localhost:5000/categorias");
+      const response = await fetch("https://pixel-store-nii6.onrender.com/categorias");
       const data = await response.json();
       if (response.ok) setCategorias(data);
     } catch (error) {
@@ -40,7 +40,7 @@ const SearchBar = () => {
       if (selectedCategory) queryParams.set("category_id", selectedCategory);
 
       try {
-        const response = await fetch(`http://localhost:5000/juegos?${queryParams}`);
+        const response = await fetch(`https://pixel-store-nii6.onrender.com/juegos?${queryParams}`);
         const data = await response.json();
         if (response.ok) navigate("/buscar", { state: { juegos: data } });
       } catch (error) {

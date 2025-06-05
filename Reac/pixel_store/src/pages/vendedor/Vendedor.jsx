@@ -25,7 +25,7 @@ const JuegosVendedor = () => {
 
   const fetchCategorias = async () => {
     try {
-      const res = await fetch("http://localhost:5000/categorias", {
+      const res = await fetch("https://pixel-store-nii6.onrender.com/categorias", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -39,7 +39,7 @@ const JuegosVendedor = () => {
 
   const fetchJuegosDelVendedor = async () => {
     try {
-      const res = await fetch("http://localhost:5000/mis-juegos", {
+      const res = await fetch("https://pixel-store-nii6.onrender.com/mis-juegos", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -80,8 +80,8 @@ const JuegosVendedor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = editingJuegoId
-      ? `http://localhost:5000/juego/${editingJuegoId}`
-      : "http://localhost:5000/juegos";
+      ? `https://pixel-store-nii6.onrender.com/juego/${editingJuegoId}`
+      : "https://pixel-store-nii6.onrender.com/juegos";
     const method = editingJuegoId ? "PUT" : "POST";
 
     try {
@@ -135,7 +135,7 @@ const JuegosVendedor = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("¿Eliminar este juego?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/juego/${id}`, {
+      const res = await fetch(`https://pixel-store-nii6.onrender.com/juego/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

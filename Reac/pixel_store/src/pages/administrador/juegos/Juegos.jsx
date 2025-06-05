@@ -21,7 +21,7 @@ const JuegosCRUD = () => {
 
   const fetchJuegos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/juegos", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/juegos", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -39,7 +39,7 @@ const JuegosCRUD = () => {
 
   const fetchCategorias = async () => {
     try {
-      const response = await fetch("http://localhost:5000/categorias", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/categorias", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -91,8 +91,8 @@ const JuegosCRUD = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = editingJuegoId
-      ? `http://localhost:5000/juego/${editingJuegoId}`
-      : "http://localhost:5000/juegos";
+      ? `https://pixel-store-nii6.onrender.com/juego/${editingJuegoId}`
+      : "https://pixel-store-nii6.onrender.com/juegos";
     const method = editingJuegoId ? "PUT" : "POST";
 
     try {
@@ -145,7 +145,7 @@ const JuegosCRUD = () => {
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de eliminar este juego?")) {
       try {
-        const response = await fetch(`http://localhost:5000/juego/${id}`, {
+        const response = await fetch(`https://pixel-store-nii6.onrender.com/juego/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -184,13 +184,28 @@ const JuegosCRUD = () => {
           onChange={handleChange}
           required
         />
+      <div style={{ position: "relative", marginBottom: "10px" }}>
         <textarea
           className="input1"
           name="descripcion"
-          placeholder="Descripción"
+          placeholder="Descripción (máx. 500 caracteres)"
           value={formData.descripcion}
-          onChange={handleChange}
+          onChange={(e) => {
+            const value = e.target.value;
+            if (value.length > 500) {
+              alert("La descripción no puede tener más de 500 caracteres.");
+              return;
+            }
+            setFormData({ ...formData, descripcion: value });
+          }}
+          maxLength={500}
+          required
         />
+        <div style={{ textAlign: "right", fontSize: "12px", marginTop: "2px" }}>
+          {formData.descripcion.length} / 500 caracteres
+        </div>
+      </div>
+
         <input
           className="input1"
           type="number"

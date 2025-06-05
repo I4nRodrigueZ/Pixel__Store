@@ -21,7 +21,7 @@ export default function ResetPasswordPage() {
     }
 
     try {
-      const response = await axios.post(`http://localhost:5000/reset-password/${token}`, {
+      const response = await axios.post(`https://pixel-store-nii6.onrender.com/reset-password/${token}`, {
         contrasena,
       });
       setExito(true);

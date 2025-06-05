@@ -22,7 +22,7 @@ const EditarPerfil = () => {
   useEffect(() => {
     const obtenerUsuario = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/usuario/${idUsuario}`, {
+        const res = await axios.get(`https://pixel-store-nii6.onrender.com/usuario/${idUsuario}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -69,7 +69,7 @@ const EditarPerfil = () => {
       };
 
       await axios.put(
-        `http://localhost:5000/usuario/${idUsuario}`,
+        `https://pixel-store-nii6.onrender.com/usuario/${idUsuario}`,
         datosActualizados,
         {
           headers: {

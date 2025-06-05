@@ -28,7 +28,7 @@ const PromocionesCRUD = () => {
 
   const fetchPromociones = async () => {
     try {
-      const response = await fetch("http://localhost:5000/promociones", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/promociones", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -49,7 +49,7 @@ const PromocionesCRUD = () => {
 
   const fetchJuegos = async () => {
     try {
-      const response = await fetch("http://localhost:5000/juegos", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/juegos", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -93,8 +93,8 @@ const PromocionesCRUD = () => {
     };
 
     const url = editingPromocionId
-      ? `http://localhost:5000/promocion/${editingPromocionId}`
-      : "http://localhost:5000/promociones";
+      ? `https://pixel-store-nii6.onrender.com/promocion/${editingPromocionId}`
+      : "https://pixel-store-nii6.onrender.com/promociones";
 
     const method = editingPromocionId ? "PUT" : "POST";
 
@@ -141,7 +141,7 @@ const PromocionesCRUD = () => {
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de eliminar esta promoción?")) {
       try {
-        const response = await fetch(`http://localhost:5000/promocion/${id}`, {
+        const response = await fetch(`https://pixel-store-nii6.onrender.com/promocion/${id}`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -22,7 +22,7 @@ const UsuariosCRUD = () => {
   // Función para obtener usuarios desde el servidor
   const fetchUsuarios = async () => {
     try {
-      const response = await fetch("http://localhost:5000/usuarios", {
+      const response = await fetch("https://pixel-store-nii6.onrender.com/usuarios", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -49,8 +49,8 @@ const UsuariosCRUD = () => {
     e.preventDefault();
 
     const url = editingUserId
-      ? `http://localhost:5000/usuario/${editingUserId}`
-      : "http://localhost:5000/usuarios";
+      ? `https://pixel-store-nii6.onrender.com/usuario/${editingUserId}`
+      : "https://pixel-store-nii6.onrender.com/usuarios";
     const method = editingUserId ? "PUT" : "POST";
 
     try {
@@ -103,7 +103,7 @@ const UsuariosCRUD = () => {
   // Manejar la eliminación de un usuario
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/usuario/${id}`, {
+      const response = await fetch(`https://pixel-store-nii6.onrender.com/usuario/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,

@@ -98,7 +98,7 @@ const Reporte = () => {
   useEffect(() => {
     const cargar = async () => {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/facturas", {
+      const res = await axios.get("https://pixel-store-nii6.onrender.com/facturas", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFacturas(res.data);

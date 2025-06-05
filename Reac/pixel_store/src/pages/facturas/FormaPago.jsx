@@ -56,7 +56,7 @@ const FormaPago = () => {
     useEffect(() => {
         const obtenerDivisas = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/divisas', {
+                const response = await axios.get('https://pixel-store-nii6.onrender.com/divisas', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -94,7 +94,7 @@ const FormaPago = () => {
         
         try {
             const response = await axios.post(
-                'http://localhost:5000/generar-factura',
+                'https://pixel-store-nii6.onrender.com/generar-factura',
                 {
                     metodo_pago: metodoPago,
                     divisa_id: divisaSeleccionada,
