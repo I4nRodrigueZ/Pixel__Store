@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CiMenuBurger } from "react-icons/ci";
 import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
 import logo from "../assets/images/logo3.png";
@@ -9,6 +9,7 @@ import ProfileMenu from "./ProfileMenu";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate(); // Corregido
   const isAuthenticated = !!localStorage.getItem("token");
 
   const handleMenuToggle = () => {
@@ -16,17 +17,12 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    // 🔐 Limpiamos todo el localStorage
-    localStorage.clear();
-
-    // 🔁 Redirigimos al login
-    window.location.href = "/login";
+    localStorage.removeItem("token");
+    navigate("/login"); // Corregido
   };
 
-  // 🛑 Oculta el header si estás en login o admin
   const hideElements = location.pathname === "/login" || location.pathname.startsWith("/admin");
 
-  // 🛒 Puedes actualizar este número con datos reales del carrito si lo deseas
   const cartCount = 0;
 
   return (
