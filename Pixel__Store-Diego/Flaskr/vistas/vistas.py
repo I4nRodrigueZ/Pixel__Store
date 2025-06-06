@@ -152,70 +152,73 @@ class VistaUsuarios(Resource):
     def get(self):
         return usuarios_schema.dump(Usuario.query.all()), 200
 
-
     def post(self):
         try:
+            # Validar y convertir el rol a minúsculas (para que coincida con el Enum)
+            rol_input = request.json['rol'].lower()  # "USUARIO" → "usuario"
+            
+            # Verificar si el rol es válido
+            if rol_input not in [role.value for role in RolUsuario]:
+                return {"mensaje": "Rol inválido. Usa 'admin', 'usuario' o 'vendedor'."}, 400
+
             nuevo_usuario = Usuario(
                 nombre=request.json['nombre'],
-                apellido=request.json['apellido'],  # Campo adicional
+                apellido=request.json['apellido'],
                 email=request.json['email'],
                 contrasena=request.json['contrasena'],
                 fecha_registro=request.json['fecha_registro'],
-                rol=RolUsuario(request.json['rol']),  # Convertir rol a Enum
-                telefono=request.json['telefono'],  # Campo adicional
-                direccion=request.json['direccion']  # Campo adicional
+                rol=RolUsuario(rol_input),  # Asignar el Enum correctamente
+                telefono=request.json['telefono'],
+                direccion=request.json['direccion']
             )
             db.session.add(nuevo_usuario)
             db.session.commit()
             return usuario_schema.dump(nuevo_usuario), 201
-        except ValueError:
-            return {"mensaje": "Rol inválido. Use 'usuario' o 'vendedor'."}, 400
+        except KeyError as e:
+            return {"mensaje": f"Falta el campo obligatorio: {str(e)}"}, 400
         except IntegrityError:
             db.session.rollback()
-            return {"mensaje": "Error al crear el usuario. Verifique los datos ingresados."}, 409
+            return {"mensaje": "El correo ya está registrado."}, 409
 
 
 class VistaUsuario(Resource):
     @jwt_required()
     def get(self, id_usuario):
-        # Recuperar un usuario por su id
         usuario = Usuario.query.get_or_404(id_usuario)
         return usuario_schema.dump(usuario), 200
 
     @jwt_required()
     def put(self, id_usuario):
-        # Recuperar el usuario a editar
         usuario = Usuario.query.get_or_404(id_usuario)
         
-        # Actualizar los campos del usuario, con valores proporcionados o los actuales
+        # Actualizar campos básicos
         usuario.nombre = request.json.get('nombre', usuario.nombre)
-        usuario.apellido = request.json.get('apellido', usuario.apellido)  # Nuevo campo
+        usuario.apellido = request.json.get('apellido', usuario.apellido)
         usuario.email = request.json.get('email', usuario.email)
-        
-        # Aquí debes cambiar 'nombre_rol' por 'rol'
-        usuario.rol = request.json.get('rol', usuario.rol)
-        
-        usuario.telefono = request.json.get('telefono', usuario.telefono)  # Nuevo campo
-        usuario.direccion = request.json.get('direccion', usuario.direccion)  # Nuevo campo
-        
-        # Solo actualizar la contraseña si se proporciona
+        usuario.telefono = request.json.get('telefono', usuario.telefono)
+        usuario.direccion = request.json.get('direccion', usuario.direccion)
+
+        # Manejo especial del ROL (convertir a minúsculas y validar)
+        if 'rol' in request.json:
+            rol_input = request.json['rol'].lower()  # "USUARIO" → "usuario"
+            try:
+                usuario.rol = RolUsuario(rol_input)  # Asignar el Enum
+            except ValueError:
+                return {"mensaje": "Rol inválido. Usa 'admin', 'usuario' o 'vendedor'."}, 400
+
+        # Actualizar contraseña (si se proporciona)
         if 'contrasena' in request.json and request.json['contrasena']:
             usuario.contrasena = request.json['contrasena']
-        
-        # Realizar la actualización en la base de datos
+
         db.session.commit()
-        
-        # Retornar el usuario actualizado
         return usuario_schema.dump(usuario), 200
 
     @jwt_required()
     def delete(self, id_usuario):
-        # Eliminar un usuario por su id
         usuario = Usuario.query.get_or_404(id_usuario)
         db.session.delete(usuario)
         db.session.commit()
         return '', 204
-
 
 
 class VistaJuegos(Resource):
