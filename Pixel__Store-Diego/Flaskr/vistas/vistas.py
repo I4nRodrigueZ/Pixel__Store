@@ -1329,7 +1329,7 @@ class VistaForgotPassword(Resource):
         usuario.reset_token_expiration = datetime.utcnow() + timedelta(hours=1)
         db.session.commit()
 
-        enlace = f"https://pixel-store-ryel.onrender.com/reset-password/{token}"
+        enlace = f"http://localhost:5173/reset-password/{token}"
         mensaje = Message('Recuperación de contraseña',
                           recipients=[email])
         mensaje.body = f"""🎮 ¡Hola {usuario.nombre}!
