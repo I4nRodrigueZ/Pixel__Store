@@ -16,12 +16,17 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // 🔐 Limpiamos todo el localStorage
+    localStorage.clear();
+
+    // 🔁 Redirigimos al login
     window.location.href = "/login";
   };
 
+  // 🛑 Oculta el header si estás en login o admin
   const hideElements = location.pathname === "/login" || location.pathname.startsWith("/admin");
 
+  // 🛒 Puedes actualizar este número con datos reales del carrito si lo deseas
   const cartCount = 0;
 
   return (
