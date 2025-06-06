@@ -4,7 +4,7 @@ import '../assets/styles/style.css'; // Asegúrate de importar tus estilos
 import { Link } from 'react-router-dom';
 // Importa las imágenes directamente
 import fc25 from '../assets/images/juegos/fc25.jpg';
-import goku from '../assets/images/juegos/Goku.jpg';
+import goku from '../assets/images/juegos/goku.jpg';
 import resize from '../assets/images/juegos/resize.jpg';
 import black6 from '../assets/images/juegos/black6.jpg';
 import redDead from '../assets/images/juegos/red_dead.jpg';
