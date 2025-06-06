@@ -10,9 +10,9 @@ db = SQLAlchemy()
 
 # Enumeraciones
 class RolUsuario(enum.Enum):
-    ADMIN = "ADMIN"
-    USUARIO = "USUARIO"
-    VENDEDOR = "VENDEDOR"
+    ADMIN = "admin"
+    USUARIO = "usuario"
+    VENDEDOR = "vendedor"
 
 
 
