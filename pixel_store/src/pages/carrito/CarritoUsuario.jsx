@@ -78,7 +78,22 @@ const CarritoUsuario = () => {
         navigate("/facturas", { state: { total } });
     };
 
-    if (loading) return <p className="carrito-loading">Cargando carrito...</p>;
+    if (loading) return (
+        <div className="ui-abstergo">
+            <div className="abstergo-loader">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <div className="ui-text">
+                Cargando carrito
+                <div className="ui-dot"></div>
+                <div className="ui-dot"></div>
+                <div className="ui-dot"></div>
+            </div>
+        </div>
+    );
+    
     if (error) return <p className="carrito-error">Error: {error}</p>;
 
     return (
