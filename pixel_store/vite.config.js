@@ -14,14 +14,12 @@ export default defineConfig({
   build: {
     outDir: 'dist'
   },
-  // 👇 esta parte es la más importante para rutas en React Router
   resolve: {
     alias: {
       '@': '/src',
     },
   },
-  base: '/',
-  // 👇 esto redirige cualquier ruta a index.html (para React Router)
+  base: './', // ¡CAMBIADO AQUÍ!
   optimizeDeps: {
     entries: ['index.html']
   }
